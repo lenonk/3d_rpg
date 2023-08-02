@@ -2,7 +2,7 @@
 
 [ext_resource type="MeshLibrary" uid="uid://c4r1neiygodhj" path="res://floors.tres" id="2_y61a7"]
 [ext_resource type="MeshLibrary" uid="uid://lkaqq6fup2o7" path="res://walls.tres" id="3_6c2iw"]
-[ext_resource type="PackedScene" uid="uid://vsjlxvjdgqpp" path="res://Players/PlayerSkeletonMinion/PlayerSkeletonMinion.tscn" id="3_g0rww"]
+[ext_resource type="PackedScene" uid="uid://drd7387wbjhc0" path="res://Players/PlayerSkeletonWarrior/PlayerSkeletonWarrior.tscn" id="3_or1db"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tdlb1"]
 sky_top_color = Color(0.811765, 0.847059, 0.898039, 1)
@@ -39,5 +39,5 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 2, 0)
 
-[node name="Player" parent="." instance=ExtResource("3_g0rww")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11951, 1.17098, -0.751739)
+[node name="Player" parent="." instance=ExtResource("3_or1db")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.42281, 1.05, -4.34385)
