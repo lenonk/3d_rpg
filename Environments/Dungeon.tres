@@ -1,0 +1,6 @@
+[gd_resource type="Environment" format=3 uid="uid://bjb6ki0vecu0w"]
+
+[resource]
+background_mode = 1
+volumetric_fog_enabled = true
+volumetric_fog_emission = Color(0.2, 0.2, 0.2, 1)
