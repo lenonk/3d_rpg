@@ -3,16 +3,13 @@
 [ext_resource type="Environment" uid="uid://bjb6ki0vecu0w" path="res://Environments/Dungeon.tres" id="1_31ljf"]
 [ext_resource type="MeshLibrary" uid="uid://c4r1neiygodhj" path="res://floors.tres" id="2_y61a7"]
 [ext_resource type="MeshLibrary" uid="uid://lkaqq6fup2o7" path="res://walls.tres" id="3_6c2iw"]
-[ext_resource type="PackedScene" uid="uid://ckkcvisfk55lk" path="res://Players/PlayerSkeletonArcher/PlayerSkeletonArcher.tscn" id="3_cvunx"]
 [ext_resource type="PackedScene" uid="uid://dml54srrxs5pi" path="res://Objects/Torch.tscn" id="4_cup55"]
+[ext_resource type="PackedScene" uid="uid://drd7387wbjhc0" path="res://Players/PlayerSkeletonWarrior/PlayerSkeletonWarrior.tscn" id="5_xxkgq"]
 
 [node name="World" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_31ljf")
-
-[node name="Player" parent="." instance=ExtResource("3_cvunx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98585, 1.02849, -0.225045)
 
 [node name="Objects" type="Node3D" parent="."]
 
@@ -77,3 +74,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -17.37
 
 [node name="Torch15" parent="Objects" instance=ExtResource("4_cup55")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3773, 6.60543, -33.7424)
+
+[node name="Player" parent="." instance=ExtResource("5_xxkgq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.22567, 1.05, -9.91163)

@@ -9,6 +9,8 @@ public partial class AttackState : State
 	}
 
 	public override async void _PhysicsProcess(double delta) {
+		_animTree.Advance(delta * 0.1f);
+		
 		if (_animation.IsPlaying() && _animation.GetCurrentNode()== "Attack(1h)") {
 			await ToSignal(_animTree, "animation_finished");
 			_player.ChangeState("Idle");
@@ -16,6 +18,5 @@ public partial class AttackState : State
 	}
 	
 	public override void Exit() {
-		GD.Print("Exiting AttackState");
 	}
 }
