@@ -1,8 +1,8 @@
 using Godot;
 using System;
 
-public partial class JumpState : State
-{
+public partial class JumpState : State {
+	
 	public override void _Ready() {
 		base._Ready();
 		_animation.Travel("Jump");
@@ -16,13 +16,13 @@ public partial class JumpState : State
 			velocity.Y = _player.JumpVelocity;
 		}
 
-		if (_player.IsOnFloor())
+		if (_player.IsOnFloor()) {
 			_player.ChangeState("Idle");
-		
+		}
+
 		_player.Velocity = velocity;
 	}
-	
+
 	public override void Exit() {
-		GD.Print("Exiting JumpState");
 	}
 }
