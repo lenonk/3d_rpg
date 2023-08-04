@@ -12,11 +12,9 @@ public partial class WalkState : State
 	public override void _PhysicsProcess(double delta) {
 		Vector3 velocity = _player.Velocity;
 		if (Input.IsActionJustPressed("Jump") && _player.IsOnFloor()) {
-			_player.Stop(delta);
 			_player.ChangeState("Jump");
 		}
-		else if (Input.IsActionJustPressed("Attack") && _player.IsOnFloor()) {
-			_player.Stop(delta);
+		else if (Input.IsActionPressed("Attack") && _player.IsOnFloor()) {
 			_player.ChangeState("Attack");
 		}
 		else if (_player.Direction != Vector3.Zero) {

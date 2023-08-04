@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://drd7387wbjhc0"]
 
 [ext_resource type="PackedScene" uid="uid://cp024l63dcgo6" path="res://Characters/EntityBase/EntityBase.tscn" id="1_jg20v"]
-[ext_resource type="PackedScene" uid="uid://bsqncdredk764" path="res://Characters/Weapons/DoubleAxe.tscn" id="2_65h0o"]
+[ext_resource type="PackedScene" uid="uid://bsqncdredk764" path="res://Characters/Weapons/DoubleAxe/DoubleAxe.tscn" id="2_65h0o"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7sif"]
 resource_name = "White"
@@ -556,16 +556,16 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_fcgmx")
 
-[node name="Player" instance=ExtResource("1_jg20v")]
+[node name="Entity" instance=ExtResource("1_jg20v")]
 
 [node name="Skeleton3D" parent="." index="1"]
-bones/0/rotation = Quaternion(-0.00766652, -1.09077e-27, 3.79846e-18, 0.999971)
-bones/1/rotation = Quaternion(0.0555978, -5.82939e-26, -1.5372e-17, 0.998453)
-bones/2/rotation = Quaternion(-0.683024, -0.18446, 0.682163, -0.184676)
-bones/4/rotation = Quaternion(-0.701486, 0.2941, 0.646343, 0.0605224)
+bones/0/rotation = Quaternion(-0.0102521, 0, 0, 0.999947)
+bones/1/rotation = Quaternion(0.0593531, -1.70392e-26, -9.89236e-18, 0.998237)
+bones/2/rotation = Quaternion(-0.682007, -0.188674, 0.680853, -0.188964)
+bones/4/rotation = Quaternion(-0.700239, 0.29686, 0.646195, 0.0630199)
 
 [node name="Head" parent="Skeleton3D" index="0"]
-transform = Transform3D(1, 2.31403e-17, -9.2377e-19, -2.31224e-17, 0.995403, -0.0957728, -1.29669e-18, 0.0957728, 0.995403, -5.40579e-18, 0.711514, -0.0109106)
+transform = Transform3D(1, 1.97498e-17, -1.17429e-18, -1.97698e-17, 0.995175, -0.0981134, -7.69104e-19, 0.0981134, 0.995175, 0, 0.711448, -0.01459)
 
 [node name="character_skeleton_warrior_head" type="MeshInstance3D" parent="Skeleton3D/Head" index="0"]
 transform = Transform3D(1, -3.07022e-17, -1.60692e-18, 3.06806e-17, 0.993205, 0.116377, -1.97703e-18, -0.116377, 0.993205, 2.01466e-19, -0.00596321, 0.00964984)
@@ -590,7 +590,7 @@ mesh = SubResource("ArrayMesh_5kpjj")
 skeleton = NodePath("")
 
 [node name="Body" parent="Skeleton3D" index="1"]
-transform = Transform3D(1, -7.5967e-18, -5.82419e-20, 7.5967e-18, 0.999882, 0.0153326, -5.82419e-20, -0.0153326, 0.999882, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99979, 0.0205032, 0, -0.0205032, 0.99979, 0, 0, 0)
 
 [node name="character_skeleton_warrior_body" type="MeshInstance3D" parent="Skeleton3D/Body" index="0"]
 transform = Transform3D(1, -7.59648e-18, 6.6404e-20, 7.59677e-18, 0.999966, -0.00818552, -4.22066e-21, 0.00818552, 0.999966, 0, 0, 0)
@@ -598,7 +598,7 @@ mesh = SubResource("ArrayMesh_g45oe")
 skeleton = NodePath("")
 
 [node name="ArmLeft" parent="Skeleton3D" index="2"]
-transform = Transform3D(0.00125504, 0.50394, -0.863738, -0.0153095, -0.863628, -0.503898, -0.999882, 0.0138559, 0.00663107, 0.14, 0.691517, -0.010604)
+transform = Transform3D(0.00168115, 0.514668, -0.857388, -0.0204629, -0.857192, -0.514591, -0.999789, 0.0184097, 0.00909055, 0.14, 0.691453, -0.01418)
 
 [node name="character_skeleton_warrior_armLeft" type="MeshInstance3D" parent="Skeleton3D/ArmLeft" index="0"]
 transform = Transform3D(0.000720109, -0.00968859, -0.999953, 0.490806, -0.871225, 0.00879475, -0.871269, -0.490789, 0.00412786, -0.00609831, 0.0820367, -0.0273035)
@@ -606,7 +606,7 @@ mesh = SubResource("ArrayMesh_lr56i")
 skeleton = NodePath("")
 
 [node name="ArmRight" parent="Skeleton3D" index="3"]
-transform = Transform3D(-0.00850832, -0.490851, -0.871202, -0.348788, -0.815061, 0.462626, -0.937163, 0.307801, -0.164268, -0.14, 0.691517, -0.010604)
+transform = Transform3D(-0.0113866, -0.497192, -0.867566, -0.353551, -0.809578, 0.4686, -0.935346, 0.312065, -0.166565, -0.14, 0.691453, -0.01418)
 
 [node name="character_skeleton_warrior_armRight" type="MeshInstance3D" parent="Skeleton3D/ArmRight" index="0"]
 transform = Transform3D(-0.0236227, -0.368676, -0.929258, -0.522783, -0.787743, 0.325821, -0.852139, 0.493496, -0.174129, -0.00125009, 0.0872308, 0.0216634)
@@ -614,10 +614,10 @@ mesh = SubResource("ArrayMesh_27his")
 skeleton = NodePath("")
 
 [node name="HandSlotLeft" parent="Skeleton3D" index="4"]
-transform = Transform3D(-0.999327, -0.00125504, -0.0366606, -0.0366756, 0.0153095, 0.99921, -0.000692934, 0.999882, -0.0153452, 0.417632, 0.215725, -0.00297047)
+transform = Transform3D(-0.998792, -0.00168115, -0.049116, -0.0491402, 0.0204629, 0.998582, -0.000673691, 0.999789, -0.0205208, 0.423542, 0.219207, -0.00403763)
 
 [node name="HandSlotRight" parent="Skeleton3D" index="5"]
-transform = Transform3D(-0.974875, 0.21654, -0.0522361, 0.0260201, 0.343601, 0.938756, 0.221226, 0.91381, -0.340602, -0.41042, 0.242482, 0.15897)
+transform = Transform3D(-0.974608, 0.219368, -0.0449116, 0.0348206, 0.346609, 0.937363, 0.221194, 0.911998, -0.345447, -0.413914, 0.245439, 0.157743)
 
 [node name="DoubleAxe" parent="Skeleton3D/HandSlotRight" index="0" instance=ExtResource("2_65h0o")]
 transform = Transform3D(-0.00332167, 0.00144333, 0.999994, -0.00175074, 0.999998, -0.00144926, -0.999993, -0.00175554, -0.00331888, -0.0635714, -0.0973101, 0.0151142)

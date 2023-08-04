@@ -18,7 +18,7 @@ public partial class IdleState : State
 
 		if (Input.IsActionJustPressed("Jump") && _player.IsOnFloor())
 			_player.ChangeState("Jump");
-		if (Input.IsActionJustPressed("Attack") && _player.IsOnFloor())
+		if (Input.IsActionPressed("Attack") && _player.IsOnFloor())
 			_player.ChangeState("Attack");
 
 		_player.Stop(delta);
