@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Enemy : Entity {
 	[Export] public const float Speed = 3.0f;
@@ -37,36 +36,41 @@ public partial class Enemy : Entity {
 		if (_target == null) {
 			_direction = Vector3.Zero;
 			_animationPlayer.Play("Idle");
-			MoveAndSlide(); // Otherwise we float if we're not on the floor
-			return;
+		}
+		else {
+			_direction = (_target.Position - Position).Normalized();
+
+			if (Position.DistanceTo(_target.Position) <= AttackRadius) {
+				velocity.X = velocity.Z = 0;
+				_mesh.Rotation = GetMeshRotationAngle(delta);
+				velocity = Vector3.Zero;
+				_animationPlayer.Play("Attack(1h)");
+			}
+			else if (Position.DistanceTo(_target.Position) - _target.Size <= ChaseRadius) {
+				_mesh.Rotation = GetMeshRotationAngle(delta);
+				velocity.X = _direction.X * Speed;
+				velocity.Z = _direction.Z * Speed;
+				_animationPlayer.Play("Run");
+			}
 		}
 
-		_direction = (_target.Position - Position).Normalized();
-		
-		if (Position.DistanceTo(_target.Position) <= AttackRadius) {
-			velocity.X = velocity.Z = 0;
-			_mesh.Rotation = GetMeshRotationAngle(delta);
-			velocity = Vector3.Zero; _animationPlayer.Play("Attack(1h)");
-		}
-		else if (Position.DistanceTo(_target.Position) - _target.Size <= ChaseRadius) {
-			_mesh.Rotation = GetMeshRotationAngle(delta);
-			velocity.X = _direction.X * Speed;
-			velocity.Z = _direction.Z * Speed;
-			_animationPlayer.Play("Run");
-		}
-		
 		Velocity = velocity;
 		MoveAndSlide();
 	}
 	
-	private Vector3 GetMeshRotationAngle(double delta) {
-			Vector3 angle = _mesh.Rotation; 
-			angle.Y = (float)Mathf.LerpAngle(
-				_mesh.Rotation.Y,
-				Mathf.Atan2(_direction.X, _direction.Z) - Rotation.Y, 
-				delta * 10);
+	public override void TakeDamage(int value) {
+		if (_health > 0 && (_health -= value) <= 0)
+			Die();
+	}
 
-			return angle;
+	private Vector3 GetMeshRotationAngle(double delta) {
+		Vector3 angle = _mesh.Rotation; 
+		angle.Y = (float)Mathf.LerpAngle(
+			_mesh.Rotation.Y,
+			Mathf.Atan2(_direction.X, _direction.Z) - Rotation.Y, 
+			delta * 10);
+
+		return angle;
 	}
 		
 	private Area3D CreateArea3D(string name, float size) {
@@ -98,11 +102,6 @@ public partial class Enemy : Entity {
 		QueueFree();
 	}
 
-	public override void TakeDamage(int value) {
-		if (_health > 0 && (_health -= value) <= 0)
-			Die();
-	}
-	
 	private void OnChaseBodyEntered(Node3D body) {
 		if (body is not Player player) return;
 		_target = player;

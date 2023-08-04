@@ -15,6 +15,10 @@ run/main_scene="res://World/Development Level/world.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://World/Global.cs"
+
 [display]
 
 window/size/viewport_width=1920

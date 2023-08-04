@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://2tswikmril1"]
+[gd_scene load_steps=10 format=3 uid="uid://2tswikmril1"]
 
 [ext_resource type="Environment" uid="uid://bjb6ki0vecu0w" path="res://Environments/Dungeon.tres" id="1_rdbok"]
 [ext_resource type="MeshLibrary" uid="uid://lkaqq6fup2o7" path="res://World/Mesh Libs/walls.tres" id="2_l0h0k"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Characters/PlayerScripts/Player.cs" id="6_1xdse"]
 [ext_resource type="PackedScene" uid="uid://drd7387wbjhc0" path="res://Characters/SkeletonWarrior/SkeletonWarrior.tscn" id="6_wbq65"]
 [ext_resource type="Script" path="res://Characters/EnemyScripts/Enemy.cs" id="7_1mdxr"]
+[ext_resource type="PackedScene" uid="uid://bx3gbabsepw6e" path="res://UI/PauseMenu/PauseMenu.tscn" id="9_du00v"]
 
 [node name="World" type="Node3D"]
 
@@ -96,3 +97,6 @@ script = ExtResource("7_1mdxr")
 [node name="Enemy" parent="Monsters" instance=ExtResource("6_wbq65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382833, 1.05, 2.19678)
 script = ExtResource("7_1mdxr")
+
+[node name="PauseMenu" parent="." instance=ExtResource("9_du00v")]
+visible = false

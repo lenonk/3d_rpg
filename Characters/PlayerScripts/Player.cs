@@ -29,7 +29,6 @@ public partial class Player : Entity
 	}
 	
 	public override void _PhysicsProcess(double delta) {
-		//GD.Print("Player: " + _health);
 		Vector3 velocity = Velocity;
 		Direction = Vector3.Zero;
 		
@@ -69,6 +68,11 @@ public partial class Player : Entity
 		Velocity = velocity;
 	}
 	
+	public override void TakeDamage(int value) {
+		_health -= value;
+		if (_health <= 0) Die();
+	}
+    	
 	private Vector3 GetDirection() {
 		return new Vector3(
 			Input.GetActionStrength("WalkLeft") - Input.GetActionStrength("WalkRight"),
@@ -78,12 +82,6 @@ public partial class Player : Entity
 
 	private void Die() {
 	}
-	
-	public override void TakeDamage(int value) {
-		_health -= value;
-		if (_health <= 0) Die();
-	}
-	
-	public State GetState() => _state;
 
+	public State GetState() => _state;
 }

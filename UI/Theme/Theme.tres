@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://cvsvhyfoqxi2o"]
+
+[ext_resource type="FontFile" uid="uid://b0npp1hcfd68k" path="res://Assets/Fonts/JetBrains Mono ExtraBold Italic Nerd Font Complete Windows Compatible.ttf" id="1_16hrx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djxva"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rr7w6"]
+bg_color = Color(0.113725, 0.113725, 0.113725, 0.494118)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[resource]
+Button/font_sizes/font_size = 30
+Button/fonts/font = ExtResource("1_16hrx")
+Button/styles/normal = SubResource("StyleBoxFlat_djxva")
+HFlowContainer/constants/h_separation = 4
+HFlowContainer/constants/v_separation = 4
+Panel/styles/panel = SubResource("StyleBoxFlat_rr7w6")
