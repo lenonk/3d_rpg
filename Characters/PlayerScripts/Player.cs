@@ -100,11 +100,16 @@ public partial class Player : Entity
 	}
 
 	public State GetState() => _state;
-
+	public Inventory GetInventory() => _inventory;
+	
 	private void BuildInventory() {
 		Inventory.Item i1 = new("Rune Sword", "Badass Sword", 1);
 		Inventory.Item i2 = new("Rune Hammer", "Badass Hammer", 1);
 		Inventory.Item i3 = new("Rune Staff", "Badass Staff", 1);
+
+		i1.Icon = "res://icon.svg";
+		i2.Icon = "res://icon.svg";
+		i3.Icon = "res://icon.svg";
 		
 		_inventory.AddItem(i1);
 		_inventory.AddItem(i2);

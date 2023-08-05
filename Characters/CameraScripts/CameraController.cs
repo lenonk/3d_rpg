@@ -25,7 +25,7 @@ public partial class CameraController : Node3D {
 	public override void _Input(InputEvent @event) {
 		if (_player is null) return;
 		
-		if (@event is InputEventMouseMotion mEvent && (_player?.GetState() is WalkState || _rightButtonPressed)) {
+		if (@event is InputEventMouseMotion mEvent && _rightButtonPressed) {
 			float xRot = (float)Mathf.Clamp(Rotation.X + mEvent.Relative.Y / 1000 * Sensitivity, -0.25, 0.4);
 			float yRot = Rotation.Y - mEvent.Relative.X / 1000 * Sensitivity;
 			Rotation = new Vector3(xRot, yRot, 0);

@@ -49,6 +49,5 @@ public partial class WalkState : State
 	}
 
 	public override void Exit() {
-		Input.MouseMode = Input.MouseModeEnum.Visible;
 	}
 }
