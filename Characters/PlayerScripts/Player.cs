@@ -7,9 +7,13 @@ public partial class Player : Entity
 	[Export] public float JumpVelocity = 4.5f;
 	[Export] public float Acceleration = 5.5f;
 
+	[Signal] public delegate void PauseMenuEventHandler(Player p);
+	
 	private AnimationTree _anim;
 	private AnimationNodeStateMachinePlayback _playback;
 	private State _state = null;
+	private Inventory _inventory;
+	
 	private int _health = 10;
 
 	public Vector3 Direction;
@@ -26,6 +30,8 @@ public partial class Player : Entity
 		Mesh = GetNode<Node3D>("Skeleton3D");
 		
 		ChangeState("Idle");
+		// TODO: Remove this.  Testing only!
+		BuildInventory();
 	}
 	
 	public override void _PhysicsProcess(double delta) {
@@ -42,6 +48,13 @@ public partial class Player : Entity
 		Velocity = velocity;
 		MoveAndSlide();
 	}
+	
+	public override void _UnhandledInput(InputEvent @event) {
+		if (@event is not InputEventKey {Pressed: true, PhysicalKeycode: Key.Escape})
+			return;
+
+		EmitSignal(SignalName.PauseMenu, this);
+	}	
 	
 	public void ChangeState(string stateName) {
 		_state?.Exit();
@@ -84,4 +97,14 @@ public partial class Player : Entity
 	}
 
 	public State GetState() => _state;
+
+	private void BuildInventory() {
+		Inventory.Item i1 = new("Rune Sword", "Badass Sword", 1);
+		Inventory.Item i2 = new("Rune Hammer", "Badass Hammer", 1);
+		Inventory.Item i3 = new("Rune Staff", "Badass Staff", 1);
+		
+		_inventory.AddItem(i1);
+		_inventory.AddItem(i2);
+		_inventory.AddItem(i3);
+	}
 }
