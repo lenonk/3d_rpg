@@ -17,8 +17,8 @@ public partial class Inventory : Node
 		public int Count;
 		public Sprite2D Icon;
 	}
-	
-	private Dictionary<string, Item> _inventory;
+
+	private Dictionary<string, Item> _inventory = new();
 
 	public void RemoveItem(Item i) {
 		if (_inventory.Remove(i.Name, out Item temp))

@@ -7,12 +7,12 @@ public partial class Player : Entity
 	[Export] public float JumpVelocity = 4.5f;
 	[Export] public float Acceleration = 5.5f;
 
-	[Signal] public delegate void PauseMenuEventHandler(Player p);
+	[Signal] public delegate void PauseMenuSignalEventHandler(Player p);
 	
 	private AnimationTree _anim;
 	private AnimationNodeStateMachinePlayback _playback;
 	private State _state = null;
-	private Inventory _inventory;
+	private Inventory _inventory = new();
 	
 	private int _health = 10;
 
@@ -29,7 +29,9 @@ public partial class Player : Entity
 		_playback = (AnimationNodeStateMachinePlayback)_anim.Get("parameters/playback");
 		Mesh = GetNode<Node3D>("Skeleton3D");
 		
+		AddToGroup("Players");
 		ChangeState("Idle");
+		
 		// TODO: Remove this.  Testing only!
 		BuildInventory();
 	}
@@ -49,11 +51,12 @@ public partial class Player : Entity
 		MoveAndSlide();
 	}
 	
-	public override void _UnhandledInput(InputEvent @event) {
+	public override void _UnhandledKeyInput(InputEvent @event) {
 		if (@event is not InputEventKey {Pressed: true, PhysicalKeycode: Key.Escape})
 			return;
 
-		EmitSignal(SignalName.PauseMenu, this);
+		EmitSignal(SignalName.PauseMenuSignal, this);
+		GetViewport().SetInputAsHandled();
 	}	
 	
 	public void ChangeState(string stateName) {

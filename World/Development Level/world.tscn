@@ -90,7 +90,7 @@ Acceleration = 5.5
 
 [node name="Monsters" type="Node3D" parent="."]
 
-[node name="Entity" parent="Monsters" instance=ExtResource("6_wbq65")]
+[node name="Enemy2" parent="Monsters" instance=ExtResource("6_wbq65")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5351, 1.05, 2.17434)
 script = ExtResource("7_1mdxr")
 

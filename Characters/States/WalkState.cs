@@ -6,7 +6,6 @@ public partial class WalkState : State
 	public override void _Ready() {
 		base._Ready();
 		_animation.Travel("Walk");
-		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
 	public override void _PhysicsProcess(double delta) {
