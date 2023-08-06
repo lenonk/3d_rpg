@@ -2,11 +2,18 @@ using Godot;
 using System;
 
 public partial class Slot : Panel {
-	private Sprite2D _icon;
+	private TextureRect _icon;
 	private Label _count;
 
+	private PackedScene _hover = ResourceLoader.Load<PackedScene>("res://UI/PauseMenu/SlotHover.tscn");
+	private SlotHover _hoverPanel;
+	
+	public string Name;
+	public string Description;
+	public int Value;
+	
 	public override void _Ready() {
-		_icon = GetNode<Sprite2D>("Icon");
+		_icon = GetNode<TextureRect>("Icon");
 		_count = GetNode<Label>("Count");
 		_count.Visible = false;
 	}
@@ -19,7 +26,33 @@ public partial class Slot : Panel {
 
 	public void SetIcon(string icon) {
 		_icon.Texture = GD.Load<Texture2D>(icon);
-		_icon.Scale = new Vector2(Size.X / _icon.Texture.GetWidth(), Size.Y / _icon.Texture.GetHeight());
-		_icon.Position = new Vector2(Size.X / 2, Size.Y / 2);
+		//_icon.Scale = new Vector2(Size.X / _icon.Texture.GetWidth(), Size.Y / _icon.Texture.GetHeight());
+		//_icon.Position = new Vector2(Size.X / 2, Size.Y / 2);
+	}
+
+	private void SetupHoverPanel() {
+		_hoverPanel?.SetName(Name);
+		_hoverPanel?.SetDescription(Description);
+		_hoverPanel?.SetValue(Value.ToString());
+		_hoverPanel?.SetIcon(_icon.Texture);
+
+		Vector2 pos;
+		pos.X = Size.X - 10;
+		pos.Y = Size.Y - 10;
+		_hoverPanel.Position = pos;
+	}
+	
+	private void OnSlotMouseEntered() {
+		if (Name is not null) {
+			_hoverPanel = _hover.Instantiate() as SlotHover;
+			AddChild(_hoverPanel);
+			SetupHoverPanel();
+		}
+	}
+
+	private void OnSlotMouseExited() {
+		if (Name is not null) {
+			_hoverPanel?.QueueFree();
+		}
 	}
 }

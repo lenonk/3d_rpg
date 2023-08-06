@@ -20,8 +20,8 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -160.0
-offset_bottom = 23.0
+offset_left = -187.0
+offset_bottom = 69.0
 grow_horizontal = 0
 text = "Close
 "
@@ -51,3 +51,5 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 13
+
+[connection signal="pressed" from="Panel/Button" to="." method="OnCloseButtonPressed"]

@@ -26,7 +26,7 @@ public partial class CameraController : Node3D {
 		if (_player is null) return;
 		
 		if (@event is InputEventMouseMotion mEvent && _rightButtonPressed) {
-			float xRot = (float)Mathf.Clamp(Rotation.X + mEvent.Relative.Y / 1000 * Sensitivity, -0.25, 0.4);
+			float xRot = (float)Mathf.Clamp(Rotation.X + mEvent.Relative.Y / 1000 * Sensitivity, -0.25, 0.6);
 			float yRot = Rotation.Y - mEvent.Relative.X / 1000 * Sensitivity;
 			Rotation = new Vector3(xRot, yRot, 0);
 			GetViewport().SetInputAsHandled();

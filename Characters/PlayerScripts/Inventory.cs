@@ -1,24 +1,11 @@
 using Godot;
 using System.Collections.Generic;
+using static Items;
 using System;
 
 public partial class Inventory : Node {
 	public const int MaxSize = 78;
 	
-	public struct Item {
-		public Item(string name = "", string description = "", int count = 0, string icon = null) {
-			Name = name;
-			Description = description;
-			Count = count;
-			Icon = icon;
-		}
-
-		public string Name;
-		public string Description;
-		public int Count;
-		public string Icon;
-	}
-
 	private Dictionary<string, Item> _inventory = new();
 
 	public void RemoveItem(Item i) {

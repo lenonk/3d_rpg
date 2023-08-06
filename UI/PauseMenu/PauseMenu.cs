@@ -18,17 +18,20 @@ public partial class PauseMenu : CanvasLayer {
 		Visible = true;
 		GetTree().Paused = true;
 
-		while (_container.GetChild(0) is { } child) {
+		while (_container.GetChildCount() != 0 && _container.GetChild(0) is { } child) {
 			_container.RemoveChild(child);
 			child.QueueFree();
 		}
 
-		foreach (Inventory.Item item in p.GetInventory().GetItems()) {
+		foreach (Items.Item item in p.GetInventory().GetItems()) {
 			if (_slot.Instantiate() is not Slot slot) return;
 			_container.AddChild(slot);
-			 slot.SetIcon(item.Icon);
-			 slot.SetCount(item.Count);
-			 slot.Visible = true;
+			slot.SetIcon(item.Icon);
+			slot.SetCount(item.Count);
+			slot.Name = item.Name;
+			slot.Description = item.Description;
+			slot.Value = item.Value;
+			slot.Visible = true;
 		}
 
 		for (int i = p.GetInventory().GetItems().Count; i < Inventory.MaxSize; i++) {
@@ -50,4 +53,6 @@ public partial class PauseMenu : CanvasLayer {
 		HidePauseMenu();
 		GetViewport().SetInputAsHandled();
 	}
+
+	private void OnCloseButtonPressed() => HidePauseMenu();
 }
