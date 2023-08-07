@@ -3,8 +3,8 @@ using System;
 
 public partial class Player : Entity
 {
-	[Export] public float Speed = 5.0f;
-	[Export] public float JumpVelocity = 4.5f;
+	[Export] public float Speed = 5.5f;
+	[Export] public float JumpVelocity = 7.5f;
 	[Export] public float Acceleration = 5.5f;
 
 	[Signal] public delegate void PauseMenuSignalEventHandler(Player p);
@@ -19,9 +19,8 @@ public partial class Player : Entity
 	public Vector3 Direction;
 	public Node3D Mesh;
 	
-	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-
+	
 	public override void _Ready() {
 		base._Ready();
 		

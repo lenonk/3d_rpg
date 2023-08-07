@@ -15,7 +15,7 @@ public partial class JumpState : State {
 			await ToSignal(GetTree().CreateTimer(0.4f), "timeout");
 			velocity.Y = _player.JumpVelocity;
 		}
-
+	
 		if (_player.IsOnFloor()) {
 			_player.ChangeState("Idle");
 		}

@@ -82,10 +82,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3773, 6.60543, -33.7424)
 [node name="Characters" type="Node3D" parent="."]
 
 [node name="Player" parent="Characters" instance=ExtResource("5_uktts")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.95062, 1.0352, -25.632)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.95062, 1.4787, -25.632)
 script = ExtResource("6_1xdse")
 Speed = 5.0
-JumpVelocity = 4.5
+JumpVelocity = 7.5
 Acceleration = 5.5
 
 [node name="Monsters" type="Node3D" parent="."]
