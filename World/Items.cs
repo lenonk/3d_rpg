@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class Items : Node {
@@ -6,9 +7,17 @@ public partial class Items : Node {
 	public record ItemPrototype(string Name, string Description, int Value, string Icon);
 	
 	public struct Item {
+		[Obsolete("Do not use the default constructor.", true)]
+		public Item() {
+			_item = null;
+			Count = -1;
+			Index = -1;
+		}
+		
 		public Item(ItemPrototype proto) {
 			_item = proto;
-			Count = Index = 0;
+			Count = 1;
+			Index = 0;
 		}
 		
 		private ItemPrototype _item;

@@ -1,16 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx3gbabsepw6e"]
+[gd_scene load_steps=10 format=3 uid="uid://bx3gbabsepw6e"]
 
 [ext_resource type="Theme" uid="uid://dbip4wxb2paxx" path="res://UI/Theme/MinimalUI.tres" id="1_gkj13"]
 [ext_resource type="Script" path="res://UI/PauseMenu/PauseMenu.cs" id="1_wossw"]
 [ext_resource type="Environment" uid="uid://dsh84kftrugi" path="res://Environments/Outside.tres" id="3_6xhfw"]
-[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/PauseMenu/Slot.tscn" id="3_efpkm"]
+[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/InventorySlot.tscn" id="3_efpkm"]
 [ext_resource type="PackedScene" uid="uid://di4atxkph5is4" path="res://Characters/SkeletonArcher/SkeletonArcher.tscn" id="3_frril"]
-
-[sub_resource type="World3D" id="World3D_0lni4"]
-environment = ExtResource("3_6xhfw")
+[ext_resource type="Script" path="res://UI/Equipment/EquipmentSlot.cs" id="4_disth"]
+[ext_resource type="PackedScene" uid="uid://by6cuymoippfb" path="res://UI/Equipment/EquipmentSlot.tscn" id="5_d5yqe"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_a1u3r"]
 viewport_path = NodePath("Panel/SubViewport")
+
+[sub_resource type="World3D" id="World3D_0lni4"]
+environment = ExtResource("3_6xhfw")
 
 [node name="CanvasLayer" type="CanvasLayer"]
 process_mode = 2
@@ -80,27 +82,72 @@ layout_mode = 2
 [node name="Slot6" parent="Panel/HFlowContainer/GridContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 930.0
+grow_vertical = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 150
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 150
+
+[node name="Panel" type="Panel" parent="Panel/MarginContainer"]
+layout_mode = 2
+script = ExtResource("4_disth")
+
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -268.0
+offset_right = 180.0
+offset_bottom = 268.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_a1u3r")
+stretch_mode = 5
+
+[node name="HFlowContainer" type="VFlowContainer" parent="Panel/MarginContainer/Panel"]
+custom_minimum_size = Vector2(64, 780)
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 779.0
+
+[node name="EquipmentSlot" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="EquipmentSlot2" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="EquipmentSlot3" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="EquipmentSlot4" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="EquipmentSlot5" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+layout_mode = 2
+size_flags_vertical = 6
+
 [node name="SubViewport" type="SubViewport" parent="Panel"]
 world_3d = SubResource("World3D_0lni4")
 transparent_bg = true
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Panel/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.137993, 0.813218, 1.65771)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.813, 1.658)
 
 [node name="Entity" parent="Panel/SubViewport" instance=ExtResource("3_frril")]
 script = null
-
-[node name="TextureRect" type="TextureRect" parent="Panel"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -277.0
-offset_right = 512.0
-offset_bottom = 235.0
-grow_vertical = 2
-texture = SubResource("ViewportTexture_a1u3r")
-stretch_mode = 5
 
 [connection signal="pressed" from="Panel/Button" to="." method="OnCloseButtonPressed"]
