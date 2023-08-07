@@ -8,7 +8,7 @@ public partial class JumpState : State {
 		_animation.Travel("Jump");
 	}
 	
-	public override async void _PhysicsProcess(double delta) {
+	public override async void Process(double delta) {
 		Vector3 velocity = _player.Velocity;
 
 		if (_player.IsOnFloor()) {
@@ -23,6 +23,7 @@ public partial class JumpState : State {
 		_player.Velocity = velocity;
 	}
 
+	
 	public override void Exit() {
 	}
 }

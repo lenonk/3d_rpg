@@ -8,8 +8,9 @@ public partial class WalkState : State
 		_animation.Travel("Walk");
 	}
 
-	public override void _PhysicsProcess(double delta) {
+	public override void Process(double delta) {
 		Vector3 velocity = _player.Velocity;
+		
 		if (Input.IsActionJustPressed("Jump") && _player.IsOnFloor()) {
 			_player.ChangeState("Jump");
 		}
@@ -18,14 +19,16 @@ public partial class WalkState : State
 		}
 		else if (_player.Direction != Vector3.Zero) {
 			_player.Mesh.Rotation = GetMeshRotationAngle(delta);
-			_player.Velocity = GetVelocity(velocity, delta);
+			GetVelocity(ref velocity, delta);
 		}
 		else {
 			_player.ChangeState("Idle");
 		}
+
+		_player.Velocity = velocity;
 	}
 
-	private Vector3 GetVelocity(Vector3 velocity, double delta) {
+	private void GetVelocity(ref Vector3 velocity, double delta) {
 		velocity.X = (float)Mathf.Lerp(
 			velocity.X, 
 			_player.Direction.X * _player.Speed, 
@@ -34,8 +37,6 @@ public partial class WalkState : State
 			velocity.Z, 
 			_player.Direction.Z * _player.Speed, 
 			_player.Acceleration * delta);
-
-		return velocity;
 	}
 	
 	private Vector3 GetMeshRotationAngle(double delta) {

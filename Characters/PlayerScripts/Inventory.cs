@@ -14,10 +14,8 @@ public partial class Inventory : Node {
 	}
 	
 	public void AddItem(Item i) => _inventory.TryAdd(i.Name, i);
-	
 	public int CountItem(Item i) => _inventory[i.Name].Count;
 	public int CountItem(string i) => _inventory[i].Count;
-
 	public Item GetItem(Item i) => _inventory[i.Name];
 	public Item GetItem(string i) => _inventory[i];
 

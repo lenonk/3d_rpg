@@ -8,7 +8,7 @@ public partial class IdleState : State
 		_animation.Travel("Idle");
 	}	
 	
-	public override void _PhysicsProcess(double delta) {
+	public override void Process(double delta) {
 		if (Input.IsActionPressed("WalkRight") ||
         		    Input.IsActionPressed("WalkLeft") ||
         		    Input.IsActionPressed("WalkUp") ||

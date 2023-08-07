@@ -18,5 +18,6 @@ public abstract partial class State : Node {
 		_parent = parent;
 	}
 
+	public abstract void Process(double delta);
 	public abstract void Exit();
 }

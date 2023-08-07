@@ -102,3 +102,18 @@ Attack={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/ssao/quality=4
+environment/ssil/quality=4
+environment/screen_space_reflection/roughness_quality=3
+environment/subsurface_scattering/subsurface_scattering_quality=3
+anti_aliasing/quality/msaa_2d=3
+anti_aliasing/quality/msaa_3d=3
+anti_aliasing/quality/screen_space_aa=1
+viewport/quality/screen_space_aa=1
+viewport/quality/msaa_3d=3
+viewport/quality/msaa_2d=3
+viewport/subsurface_scattering/subsurface_scattering_quality=3
+viewport/screen_space_reflection/roughness_quality=3
+viewport/ssil/quality=4
+viewport/ssao/quality=4
+viewport/defaults/default_clear_color=Color(0.3, 0.3, 0.3, 1)

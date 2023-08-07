@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class AttackState : State
 {
@@ -8,7 +9,7 @@ public partial class AttackState : State
 		_animation.Travel("Attack(1h)");
 	}
 
-	public override async void _PhysicsProcess(double delta) {
+	public override async void Process(double delta) {
 		_player.Stop(delta, true);
 		_animTree.Advance(delta * 0.1f);
 		

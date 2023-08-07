@@ -4,8 +4,9 @@ using System;
 public partial class Player : Entity
 {
 	[Export] public float Speed = 5.5f;
-	[Export] public float JumpVelocity = 7.5f;
+	[Export] public float JumpVelocity = 15.5f;
 	[Export] public float Acceleration = 5.5f;
+	[Export] public float FallFactor = 240.5f;
 
 	[Signal] public delegate void PauseMenuSignalEventHandler(Player p);
 	
@@ -33,18 +34,22 @@ public partial class Player : Entity
 		
 		// TODO: Remove this.  Testing only!
 		BuildInventory();
+		RenderingServer.SetDefaultClearColor(Colors.DodgerBlue);
 	}
 	
 	public override void _PhysicsProcess(double delta) {
-		Vector3 velocity = Velocity;
 		Direction = Vector3.Zero;
-		
-		if (!IsOnFloor())
-			velocity.Y -= _gravity * (float)delta;
 		
 		var hRot = GetNode<Node3D>("CameraController").Basis.GetEuler().Y;
 		Direction = GetDirection(); 
 		Direction = Direction.Rotated(Vector3.Up, hRot).Normalized();
+
+		_state?.Process(delta);
+
+		Vector3 velocity = Velocity;
+
+		if (!IsOnFloor())
+			velocity.Y -= (float)(_gravity * FallFactor * delta * delta);
 
 		Velocity = velocity;
 		MoveAndSlide();
