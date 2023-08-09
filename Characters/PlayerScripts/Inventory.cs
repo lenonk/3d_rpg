@@ -18,7 +18,6 @@ public partial class Inventory : Node {
 		_inventory.AddOrUpdate(i.Name, i, (key, oldItem) =>
 		{
 			oldItem.Count++;
-			GD.Print("Name: " + oldItem.Name + " Count: " + oldItem.Count);
 			return oldItem;
 		});
 	}

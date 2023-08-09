@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dk1qceienanm6"]
+[gd_scene load_steps=4 format=3 uid="uid://xse74v6of07u"]
 
 [ext_resource type="Script" path="res://UI/Inventory/SlotHover.cs" id="1_aprp7"]
 [ext_resource type="Texture2D" uid="uid://cg1vw0b3a6ftb" path="res://icon.png" id="1_xonqy"]

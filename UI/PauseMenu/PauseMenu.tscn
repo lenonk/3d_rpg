@@ -1,12 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx3gbabsepw6e"]
+[gd_scene load_steps=8 format=3 uid="uid://bx3gbabsepw6e"]
 
 [ext_resource type="Theme" uid="uid://dbip4wxb2paxx" path="res://UI/Theme/MinimalUI.tres" id="1_gkj13"]
 [ext_resource type="Script" path="res://UI/PauseMenu/PauseMenu.cs" id="1_wossw"]
 [ext_resource type="Environment" uid="uid://dsh84kftrugi" path="res://Environments/Outside.tres" id="3_6xhfw"]
 [ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/InventorySlot.tscn" id="3_efpkm"]
 [ext_resource type="PackedScene" uid="uid://di4atxkph5is4" path="res://Characters/SkeletonArcher/SkeletonArcher.tscn" id="3_frril"]
-[ext_resource type="Script" path="res://UI/Equipment/EquipmentSlot.cs" id="4_disth"]
-[ext_resource type="PackedScene" uid="uid://by6cuymoippfb" path="res://UI/Equipment/EquipmentSlot.tscn" id="5_d5yqe"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_a1u3r"]
 viewport_path = NodePath("Panel/SubViewport")
@@ -95,7 +93,6 @@ theme_override_constants/margin_bottom = 150
 
 [node name="Panel" type="Panel" parent="Panel/MarginContainer"]
 layout_mode = 2
-script = ExtResource("4_disth")
 
 [node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/Panel"]
 layout_mode = 1
@@ -113,29 +110,35 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_a1u3r")
 stretch_mode = 5
 
-[node name="HFlowContainer" type="VFlowContainer" parent="Panel/MarginContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/Panel"]
+custom_minimum_size = Vector2(74, 0)
+layout_mode = 2
+offset_right = 74.0
+offset_bottom = 780.0
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+
+[node name="HFlowContainer" type="VFlowContainer" parent="Panel/MarginContainer/Panel/MarginContainer"]
 custom_minimum_size = Vector2(64, 780)
-layout_mode = 1
-offset_right = 64.0
-offset_bottom = 779.0
+layout_mode = 2
 
-[node name="EquipmentSlot" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+[node name="InventorySlot" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="EquipmentSlot2" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+[node name="InventorySlot2" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="EquipmentSlot3" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+[node name="InventorySlot3" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="EquipmentSlot4" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+[node name="InventorySlot4" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 
-[node name="EquipmentSlot5" parent="Panel/MarginContainer/Panel/HFlowContainer" instance=ExtResource("5_d5yqe")]
+[node name="InventorySlot5" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 

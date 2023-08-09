@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://chxjndj55m2ip"]
+
+[ext_resource type="Script" path="res://UI/DragDialog/DragDialog.cs" id="1_jd4gi"]
+[ext_resource type="Theme" uid="uid://dbip4wxb2paxx" path="res://UI/Theme/MinimalUI.tres" id="1_yjgoj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nla1a"]
+bg_color = Color(0, 0, 0, 0.486275)
+
+[node name="DragDialog" type="Control"]
+top_level = true
+z_index = 99
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1791.0
+offset_bottom = -1002.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yjgoj")
+script = ExtResource("1_jd4gi")
+
+[node name="Panel" type="Panel" parent="."]
+z_index = 99
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yjgoj")
+theme_override_styles/panel = SubResource("StyleBoxFlat_nla1a")
+
+[node name="VFlowContainer" type="VFlowContainer" parent="Panel"]
+z_index = 99
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.5
+offset_right = 45.5
+offset_bottom = 78.0
+grow_horizontal = 2
+theme = ExtResource("1_yjgoj")
+
+[node name="Label" type="Label" parent="Panel/VFlowContainer"]
+z_index = 99
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("1_yjgoj")
+text = "How Many?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="Panel/VFlowContainer"]
+process_mode = 3
+z_index = 99
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("1_yjgoj")
+text = "1"
+select_all_on_focus = true
+caret_blink = true

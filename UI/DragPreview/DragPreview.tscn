@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkgj54oo1a5m8"]
+
+[ext_resource type="Texture2D" uid="uid://c5dbodydylwxp" path="res://Assets/Icons/wooden_sword.png" id="1_7w0np"]
+[ext_resource type="Script" path="res://UI/DragPreview/DragPreview.cs" id="1_e07mm"]
+
+[node name="DragPreview" type="Sprite2D"]
+process_mode = 3
+z_index = 11
+scale = Vector2(2, 2)
+texture = ExtResource("1_7w0np")
+script = ExtResource("1_e07mm")
