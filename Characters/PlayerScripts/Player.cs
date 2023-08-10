@@ -1,5 +1,6 @@
 using Godot;
-using System;
+using Godot.Collections;
+using static Items;
 
 public partial class Player : Entity
 {
@@ -30,6 +31,7 @@ public partial class Player : Entity
 		Mesh = GetNode<Node3D>("Skeleton3D");
 		
 		AddToGroup("Players");
+		SetupSignals();
 		ChangeState("Idle");
 		
 		// TODO: Remove this.  Testing only!
@@ -103,16 +105,62 @@ public partial class Player : Entity
 	private void Die() {
 	}
 
+	private void ChangeEquipment(BoneAttachment3D slot, Item item, bool equip) {
+		var _eqScene = ResourceLoader.Load<PackedScene>(item.Scene);
+		if (equip) {
+			if (_eqScene.Instantiate() is not EquipmentBase { } eq) return;
+			eq.Name = item.Name;
+			slot.AddChild(eq);
+		}
+		else {
+			foreach (var node in slot.GetChildren()) {
+				if (node.Name == item.Name) node.QueueFree();
+			}
+		}
+		item.IsWearing = equip;
+	}
+	
+	private void OnEquipmentChanged(Item item, bool equip) {
+		BoneAttachment3D slot = null;
+		switch (item.Type) {
+			case ItemType.Weapon:
+				slot = GetNode<BoneAttachment3D>("Skeleton3D/HandSlotRight");
+				break;
+			case ItemType.Body:
+				slot = GetNode<BoneAttachment3D>("Skeleton3D/Body");
+				break;
+			case ItemType.Head:
+				slot = GetNode<BoneAttachment3D>("Skeleton3D/Head");
+				break;
+			case ItemType.Shield:
+				slot = GetNode<BoneAttachment3D>("Skeleton3D/HandSlotLeft");
+				break;
+			case ItemType.Waist:
+				break;
+			case ItemType.Misc:
+				break;
+		}
+		
+		if (slot is not null)
+			ChangeEquipment(slot, item, equip);
+	}
+	
+	private void SetupSignals() {
+		var pm = GetTree().Root.GetNode<PauseMenu>("World/PauseMenu");
+		pm.Connect(PauseMenu.SignalName.EquipmentChangedSignal, 
+			new Callable(this, nameof(OnEquipmentChanged)));
+	}
+	
 	public State GetState() => _state;
 	public Inventory GetInventory() => _inventory;
 	
 	private void BuildInventory() {
-		_inventory.AddItem(Items.CreateItem("Iron Dagger"));
-		_inventory.AddItem(Items.CreateItem("Iron Double Axe"));
-		_inventory.AddItem(Items.CreateItem("Magical Sword"));
-		_inventory.AddItem(Items.CreateItem("Magical Sword"));
-		_inventory.AddItem(Items.CreateItem("Magical Sword"));
-		_inventory.AddItem(Items.CreateItem("Magical Sword"));
-		_inventory.AddItem(Items.CreateItem("Magical Sword"));
+		_inventory.AddItem(CreateItem("Iron Dagger"));
+		_inventory.AddItem(CreateItem("Iron Double Axe"));
+		_inventory.AddItem(CreateItem("Archer's Hood"));
+		_inventory.AddItem(CreateItem("Archer's Bandolier"));
+		_inventory.AddItem(CreateItem("Wooden Shield"));
+		_inventory.AddItem(CreateItem("Magical Sword"));
+		_inventory.AddItem(CreateItem("Magical Sword"));
 	}
 }

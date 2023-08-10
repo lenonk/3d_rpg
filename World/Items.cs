@@ -1,5 +1,5 @@
-#nullable enable
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class Items : Node {
@@ -23,18 +23,20 @@ public partial class Items : Node {
 		string Scene
 	);
 	
-	public class Item {
-		// [Obsolete("Do not use the default constructor.", true)]
+	public partial class Item : Node {
+		[Obsolete("Do not use the default constructor.", true)]
 		public Item() {
 			_item = null;
 			Count = -1;
 			Index = -1;
+			IsWearing = false;
 		}
 		
 		private Item(ItemPrototype proto) {
 			_item = proto;
 			Count = 1;
 			Index = 0;
+			IsWearing = false;
 		}
 
 		public static bool operator ==(Item i1, Item i2) => i1.Name == i2.Name;
@@ -45,12 +47,14 @@ public partial class Items : Node {
 		private readonly ItemPrototype? _item;
 		public int Index;
 		public int Count;
+		public bool IsWearing;
 		
 		public string Name        { get => _item?.Name ?? ""; }
 		public string Description { get => _item?.Description ?? ""; }
 		public string Icon        { get => _item?.Icon ?? ""; }
+		public string Scene       { get => _item?.Scene ?? ""; }
 		public int Value          { get => _item?.Value ?? 0; }
-		public ItemType Type          { get => _item?.Type ?? ItemType.None; }
+		public ItemType Type      { get => _item?.Type ?? ItemType.None; }
 	}
 
 	public static Item CreateItem(string name) => Item.CreateItem(name);
@@ -81,6 +85,30 @@ public partial class Items : Node {
 			ItemType.Weapon,
 			"res://Assets/Icons/magical_sword.png",
 			"res://Characters/Weapons/Dagger/Dagger.tscn")
+		},
+		{"Archer's Hood", new(
+			"Archer's Hood", 
+			"An identity concealing hood made for archers.", 
+			1000,
+			ItemType.Head,
+			"res://Assets/Icons/archer_hood.png",
+			"res://Characters/Armor/ArcherHood/ArcherHood.tscn")
+		},
+		{"Archer's Bandolier", new(
+			"Archer's Bandolier", 
+			"An bandolier made for archers. It has many pockets and a quiver for your arrows.", 
+			1000,
+			ItemType.Body,
+			"res://Assets/Icons/archer_body.png",
+			"res://Characters/Armor/ArcherBody/ArcherBody.tscn")
+		},
+		{"Wooden Shield", new(
+			"Wooden Shield", 
+			"A shield. Made of wood.", 
+			1000,
+			ItemType.Shield,
+			"res://Assets/Icons/shield_common.png",
+			"res://Characters/Armor/WoodenShield/WoodenShield.tscn")
 		},
 	};
 }

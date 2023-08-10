@@ -75,6 +75,7 @@ points = PackedVector3Array(-0.263643, 0.458858, -0.00123333, 0.185422, 0.697367
 script = ExtResource("1_e24jj")
 
 [node name="AxeHead" type="Area3D" parent="."]
+transform = Transform3D(0.422618, 0, 0.906308, 0, 1, 0, -0.906308, 0, 0.422618, 0, 0, 0)
 
 [node name="axeDouble_common" type="MeshInstance3D" parent="AxeHead"]
 mesh = SubResource("ArrayMesh_ueabt")
@@ -82,3 +83,5 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AxeHead"]
 shape = SubResource("ConvexPolygonShape3D_m4w66")
+
+[connection signal="body_entered" from="AxeHead" to="." method="OnHit"]

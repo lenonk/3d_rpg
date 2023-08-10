@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 public partial class InventorySlot : Panel {
 	[Export] public SlotType Type;				// What type of slot this is
 	[Export] public Items.ItemType ItemType;	// What type of item this slot can hold
+
+	[Signal] public delegate void EquipmentChangedSignalEventHandler(Items.Item item, bool equip);
 	
 	private Items.Item? _item;
 	private TextureRect _icon;
@@ -98,11 +100,16 @@ public partial class InventorySlot : Panel {
 	private void RemoveItem(int c = 1) {
 		if (_item is null) return;
 		
-		SetCount(_item.Count - c);		
-		if (_item.Count <= 0) {
-			_item = null;
-			_icon.Texture = null;
-		}
+		SetCount(_item.Count - c);
+
+		if (_item.Count > 0)
+			return;
+
+		if (Type == SlotType.Equipment)
+			CheckEquipmentChanged(_item, false);
+			
+		_item = null;
+		_icon.Texture = null;
 	}
 
 	private void SwapSlot(DragData dragData) {
@@ -113,6 +120,11 @@ public partial class InventorySlot : Panel {
 		
 		SetItem(dragData.Slot._item);
 		dragData.Slot.SetItem(tmpItem);	
+	}
+
+	private void CheckEquipmentChanged(Items.Item item, bool equip) {
+		if (Type == SlotType.Equipment)
+			EmitSignal(SignalName.EquipmentChangedSignal, item, equip);
 	}
 	
 	private async Task ShowDragDialog() {
@@ -144,12 +156,22 @@ public partial class InventorySlot : Panel {
 			case (null, var item):
 				CopyItem(item);
 				SetCount(dragData.Count);
+				CheckEquipmentChanged(item, true);
 				break;
 			case var (item1, item2) when item1 == item2:
 				SetCount(item1.Count + dragData.Count);
 				break;
 			case var (item1, item2):
 				SwapSlot(dragData);
+
+				if (dragData.Slot.Type == SlotType.Equipment) {
+					dragData.Slot.CheckEquipmentChanged(item2, false);
+					dragData.Slot.CheckEquipmentChanged(item1, true);
+				}
+				else {
+					CheckEquipmentChanged(item1, false);
+					CheckEquipmentChanged(item2, true);
+				}
 				return;
 		}
 

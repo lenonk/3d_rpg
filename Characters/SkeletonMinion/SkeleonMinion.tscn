@@ -345,13 +345,15 @@ shadow_mesh = SubResource("ArrayMesh_ebp0s")
 [node name="Player" instance=ExtResource("1_f82pw")]
 
 [node name="Skeleton3D" parent="." index="1"]
-bones/0/rotation = Quaternion(-0.000662254, 0, 0, 1)
-bones/1/rotation = Quaternion(0.0455039, -4.46477e-26, -9.89175e-18, 0.998964)
-bones/2/rotation = Quaternion(-0.6857, -0.172768, 0.685649, -0.172781)
-bones/4/rotation = Quaternion(-0.704798, 0.286627, 0.646694, 0.053775)
+bones/0/rotation = Quaternion(-0.000587847, 0, 2.14861e-18, 1)
+bones/1/rotation = Quaternion(0.0451874, 9.01891e-27, -1.5371e-17, 0.998979)
+bones/2/rotation = Quaternion(-0.685718, -0.172684, 0.685673, -0.172696)
+bones/3/rotation = Quaternion(0.606617, -0.606617, 0.36334, 0.36334)
+bones/4/rotation = Quaternion(-0.704901, 0.286392, 0.646703, 0.0535637)
+bones/5/rotation = Quaternion(0.300506, -0.376591, 0.679877, 0.55285)
 
 [node name="Head" parent="Skeleton3D" index="0"]
-transform = Transform3D(1, 1.9763e-17, -9.00226e-19, -1.97642e-17, 0.995978, -0.0895943, -8.74049e-19, 0.0895943, 0.995978, 0, 0.711597, -0.000942517)
+transform = Transform3D(1, 2.64307e-17, -1.0037e-18, -2.64149e-17, 0.996022, -0.0891115, -1.35557e-18, 0.0891115, 0.996022, -3.05789e-18, 0.711597, -0.000836621)
 
 [node name="character_skeleton_minion_head" type="MeshInstance3D" parent="Skeleton3D/Head" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0070619, 0)
@@ -371,14 +373,14 @@ mesh = SubResource("ArrayMesh_5hfqm")
 skeleton = NodePath("")
 
 [node name="Body" parent="Skeleton3D" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.999999, 0.00132451, 0, -0.00132451, 0.999999, 0, 0, 0)
+transform = Transform3D(1, -4.29721e-18, -2.52611e-21, 4.29721e-18, 0.999999, 0.00117569, -2.52611e-21, -0.00117569, 0.999999, 0, 0, 0)
 
 [node name="character_skeleton_minion_body" type="MeshInstance3D" parent="Skeleton3D/Body" index="0"]
 mesh = SubResource("ArrayMesh_hcsi3")
 skeleton = NodePath("")
 
 [node name="ArmLeft" parent="Skeleton3D" index="2"]
-transform = Transform3D(7.39098e-05, 0.473867, -0.880596, -0.00132531, -0.880596, -0.473867, -0.999999, 0.00120213, 0.000562791, 0.14, 0.691597, -0.000916027)
+transform = Transform3D(6.56843e-05, 0.473651, -0.880713, -0.00117623, -0.880712, -0.47365, -0.999999, 0.00106707, 0.000499171, 0.14, 0.691598, -0.000813108)
 
 [node name="character_skeleton_minion_armLeft" type="MeshInstance3D" parent="Skeleton3D/ArmLeft" index="0"]
 transform = Transform3D(-1.44517e-08, 2.79594e-07, -0.999999, 0.471936, -0.881633, -2.79594e-07, -0.881633, -0.471936, -1.44517e-08, -1.71538e-08, 0.0813982, -0.0290748)
@@ -386,7 +388,7 @@ mesh = SubResource("ArrayMesh_cp70g")
 skeleton = NodePath("")
 
 [node name="ArmRight" parent="Skeleton3D" index="3"]
-transform = Transform3D(-0.000735998, -0.47358, -0.880751, -0.335724, -0.829515, 0.446311, -0.94196, 0.296017, -0.158382, -0.14, 0.691597, -0.000916027)
+transform = Transform3D(-0.000491738, -0.473036, -0.881043, -0.335584, -0.829874, 0.44575, -0.94201, 0.295883, -0.158335, -0.14, 0.691598, -0.000813108)
 
 [node name="character_skeleton_minion_armRight" type="MeshInstance3D" parent="Skeleton3D/ArmRight" index="0"]
 transform = Transform3D(-3.87118e-10, -2.53319e-07, -0.999999, -0.471936, -0.881633, 2.53319e-07, -0.881633, 0.471936, -3.87118e-10, 1.47279e-08, 0.0813982, 0.0290748)
@@ -394,7 +396,7 @@ mesh = SubResource("ArrayMesh_doaf1")
 skeleton = NodePath("")
 
 [node name="HandSlotLeft" parent="Skeleton3D" index="4"]
-transform = Transform3D(-0.999998, -7.39098e-05, -0.00219166, -0.00219175, 0.00132531, 0.999997, -7.11556e-05, 0.999999, -0.00132544, 0.401064, 0.206458, -0.000253745)
+transform = Transform3D(-0.999998, -6.56843e-05, -0.00194553, -0.00194559, 0.00117623, 0.999998, -6.35032e-05, 0.999999, -0.00117634, 0.400945, 0.206394, -0.000225236)
 
 [node name="HandSlotRight" parent="Skeleton3D" index="5"]
-transform = Transform3D(-0.975296, 0.20884, -0.0719947, 0.00224701, 0.335275, 0.942118, 0.22089, 0.918682, -0.327462, -0.400906, 0.234599, 0.162167)
+transform = Transform3D(-0.975302, 0.208597, -0.0726129, 0.00156659, 0.335277, 0.942118, 0.220868, 0.918736, -0.327323, -0.400606, 0.234402, 0.162196)

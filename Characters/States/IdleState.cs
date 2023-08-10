@@ -5,7 +5,7 @@ public partial class IdleState : State
 {
 	public override void _Ready() {
 		base._Ready();
-		_animation.Travel("Idle");
+		_animation?.Travel("Idle");
 	}	
 	
 	public override void Process(double delta) {

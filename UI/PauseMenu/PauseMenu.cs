@@ -2,6 +2,8 @@ using Godot;
 using System;
 
 public partial class PauseMenu : CanvasLayer {
+	[Signal] public delegate void EquipmentChangedSignalEventHandler(Items.Item item);
+	
 	private GridContainer _container;
 	private PackedScene _slot = ResourceLoader.Load<PackedScene>("res://UI/Inventory/InventorySlot.tscn");
 	private Viewport _viewPort;
@@ -22,8 +24,8 @@ public partial class PauseMenu : CanvasLayer {
 			camera.SetPhysicsProcess(false);
 			_viewPort.AddChild(pDuplicate);
 			spring.SpringLength = 1.6f;
-			spring.Position = new Vector3(0, 1, 0);
-			spring.Rotation = new Vector3(0, 0, 0);
+			spring.Position = new Vector3(0.0f, 0.75f, 0.0f);
+			spring.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
 		}
 	}
 
@@ -38,11 +40,13 @@ public partial class PauseMenu : CanvasLayer {
 
 		foreach (Items.Item item in p.GetInventory().GetItems()) {
 			if (_slot.Instantiate() is not InventorySlot slot) return;
-			_container.AddChild(slot);
-			slot.SetItem(item);
-			slot.Visible = true;
-			slot.Type = InventorySlot.SlotType.Inventory;
-			slot.ItemType = Items.ItemType.None;
+			if (!item.IsWearing) {
+				_container.AddChild(slot);
+				slot.SetItem(item);
+				slot.Visible = true;
+				slot.Type = InventorySlot.SlotType.Inventory;
+				slot.ItemType = Items.ItemType.None;
+			}
 		}
 
 		for (int i = p.GetInventory().GetItems().Count; i < Inventory.MaxSize; i++) {
@@ -68,5 +72,8 @@ public partial class PauseMenu : CanvasLayer {
 		GetViewport().SetInputAsHandled();
 	}
 
+	public void OnEquipmentChanged(Items.Item item, bool equip) => 
+		EmitSignal(SignalName.EquipmentChangedSignal, item, equip);
+	
 	private void OnCloseButtonPressed() => HidePauseMenu();
 }
