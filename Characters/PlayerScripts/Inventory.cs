@@ -21,11 +21,29 @@ public partial class Inventory : Node {
 			return oldItem;
 		});
 	}
+
+	public int CountItem(Item i) => _inventory.TryGetValue(i.Name, out var item) ? item.Count : 0;
+	public int CountItem(string i) => _inventory.TryGetValue(i, out var item) ? item.Count : 0;
+
+	public bool GetItem(Item i, out Item item) {
+		if (_inventory.TryGetValue(i.Name, out var value)) {
+			item = value;
+			return true;	
+		}
+
+		item = null;
+		return false;
+	}
 	
-	public int CountItem(Item i) => _inventory[i.Name].Count;
-	public int CountItem(string i) => _inventory[i].Count;
-	public Item GetItem(Item i) => _inventory[i.Name];
-	public Item GetItem(string i) => _inventory[i];
+	public bool GetItem(string i, out Item item) {
+		if (_inventory.TryGetValue(i, out var value)) {
+			item = value;
+			return true;	
+		}
+
+		item = null;
+		return false;
+	}
 
 	public List<Item> GetItems() {
 		List<Item> list = new();

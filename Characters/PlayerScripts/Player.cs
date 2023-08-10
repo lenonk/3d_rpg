@@ -117,7 +117,9 @@ public partial class Player : Entity
 				if (node.Name == item.Name) node.QueueFree();
 			}
 		}
-		item.IsWearing = equip;
+
+		if (_inventory.GetItem(item.Name, out var i))
+			i.IsWearing = equip;
 	}
 	
 	private void OnEquipmentChanged(Item item, bool equip) {

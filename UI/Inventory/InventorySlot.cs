@@ -80,7 +80,6 @@ public partial class InventorySlot : Panel {
 	}
 	
 	private void OnSlotMouseEntered() {
-		
 		if (_item is null || _dragging) return;
 
 		if (_hoverScene.Instantiate() is SlotHover { } hp) {
