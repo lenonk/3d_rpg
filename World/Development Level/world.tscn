@@ -4,7 +4,7 @@
 [ext_resource type="MeshLibrary" uid="uid://lkaqq6fup2o7" path="res://World/Mesh Libs/walls.tres" id="2_l0h0k"]
 [ext_resource type="MeshLibrary" uid="uid://c4r1neiygodhj" path="res://World/Mesh Libs/floors.tres" id="3_uvl4v"]
 [ext_resource type="PackedScene" uid="uid://dml54srrxs5pi" path="res://World/Objects/Torch/Torch.tscn" id="4_thqek"]
-[ext_resource type="PackedScene" uid="uid://di4atxkph5is4" path="res://Characters/SkeletonArcher/SkeletonArcher.tscn" id="5_uktts"]
+[ext_resource type="PackedScene" uid="uid://dweqqtddllhwm" path="res://Characters/SkeletonMinion/SkeleonMinion.tscn" id="5_nkuwl"]
 [ext_resource type="Script" path="res://Characters/PlayerScripts/Player.cs" id="6_1xdse"]
 [ext_resource type="PackedScene" uid="uid://drd7387wbjhc0" path="res://Characters/SkeletonWarrior/SkeletonWarrior.tscn" id="6_wbq65"]
 [ext_resource type="Script" path="res://Characters/EnemyScripts/Enemy.cs" id="7_1mdxr"]
@@ -81,8 +81,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3773, 6.60543, -33.7424)
 
 [node name="Characters" type="Node3D" parent="."]
 
-[node name="Player" parent="Characters" instance=ExtResource("5_uktts")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.95062, 1.4787, -25.632)
+[node name="Player" parent="Characters" instance=ExtResource("5_nkuwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85218, 1.3002, -24.5486)
 script = ExtResource("6_1xdse")
 Speed = 5.5
 JumpVelocity = 15.5

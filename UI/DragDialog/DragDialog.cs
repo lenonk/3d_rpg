@@ -14,18 +14,17 @@ public partial class DragDialog : Control {
 	}
 
 	public override void _Input(InputEvent @event) {
-		if (@event is InputEventKey {Pressed: true, PhysicalKeycode: Key.Enter or Key.KpEnter}) {
-			int result;
-			if (!int.TryParse(_result.Text, out result)) 
-				result = 0;
-			
-			EmitSignal(SignalName.DragDialogClose, result);
-			QueueFree();		 
-		}
-
-		if (@event is InputEventKey {Pressed: true, PhysicalKeycode: Key.Escape}) {
-			GD.Print("free");
-			QueueFree();
+		switch (@event) {
+			case InputEventKey {Pressed: true, PhysicalKeycode: Key.Enter or Key.KpEnter}:
+				int.TryParse(_result.Text, out var result);
+				EmitSignal(SignalName.DragDialogClose, result);
+				QueueFree();
+				break;
+			case InputEventKey {Pressed: true, PhysicalKeycode: Key.Escape}:
+				EmitSignal(SignalName.DragDialogClose, 0);
+				QueueFree();
+				GetViewport().SetInputAsHandled();
+				break;
 		}
 	}
 }

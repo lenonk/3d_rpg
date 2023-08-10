@@ -99,6 +99,7 @@ points = PackedVector3Array(0.00306856, 0.745899, 0.0121273, -0.0742677, 0.19081
 script = ExtResource("1_vhfyn")
 
 [node name="DaggerBlade" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0700733, -0.0163812, -0.0366213)
 
 [node name="dagger_common" type="MeshInstance3D" parent="DaggerBlade"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0674421, 0, 0.0377953)

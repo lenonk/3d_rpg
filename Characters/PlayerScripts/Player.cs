@@ -107,8 +107,8 @@ public partial class Player : Entity
 	public Inventory GetInventory() => _inventory;
 	
 	private void BuildInventory() {
-		_inventory.AddItem(Items.CreateItem("Wooden Sword"));
-		_inventory.AddItem(Items.CreateItem("White Sword"));
+		_inventory.AddItem(Items.CreateItem("Iron Dagger"));
+		_inventory.AddItem(Items.CreateItem("Iron Double Axe"));
 		_inventory.AddItem(Items.CreateItem("Magical Sword"));
 		_inventory.AddItem(Items.CreateItem("Magical Sword"));
 		_inventory.AddItem(Items.CreateItem("Magical Sword"));

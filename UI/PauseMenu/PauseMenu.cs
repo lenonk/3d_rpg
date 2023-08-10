@@ -4,6 +4,8 @@ using System;
 public partial class PauseMenu : CanvasLayer {
 	private GridContainer _container;
 	private PackedScene _slot = ResourceLoader.Load<PackedScene>("res://UI/Inventory/InventorySlot.tscn");
+	private Viewport _viewPort;
+	private TextureRect _texture;
 	
 	public override void _Ready() {
 		_container = GetNode<GridContainer>("Panel/HFlowContainer/GridContainer");
@@ -11,6 +13,17 @@ public partial class PauseMenu : CanvasLayer {
 		foreach (var node in GetTree().GetNodesInGroup("Players")) {
 			if (node is not Player p) continue;
 			p.PauseMenuSignal += ShowPauseMenu;
+			_viewPort = GetNode<SubViewport>("SubViewport");
+			
+			var pDuplicate = p.Duplicate() as Entity;
+			var camera = pDuplicate.GetNode<Node3D>("CameraController");
+			var spring = pDuplicate.GetNode<SpringArm3D>("CameraController/SpringArm3D");
+
+			camera.SetPhysicsProcess(false);
+			_viewPort.AddChild(pDuplicate);
+			spring.SpringLength = 1.6f;
+			spring.Position = new Vector3(0, 1, 0);
+			spring.Rotation = new Vector3(0, 0, 0);
 		}
 	}
 
@@ -28,12 +41,16 @@ public partial class PauseMenu : CanvasLayer {
 			_container.AddChild(slot);
 			slot.SetItem(item);
 			slot.Visible = true;
+			slot.Type = InventorySlot.SlotType.Inventory;
+			slot.ItemType = Items.ItemType.None;
 		}
 
 		for (int i = p.GetInventory().GetItems().Count; i < Inventory.MaxSize; i++) {
 			if (_slot.Instantiate() is not InventorySlot slot) return;
 			_container.AddChild(slot);
 			slot.Visible = true;
+			slot.Type = InventorySlot.SlotType.Inventory;
+			slot.ItemType = Items.ItemType.None;
 		}
 	}
 	
@@ -46,7 +63,8 @@ public partial class PauseMenu : CanvasLayer {
 		if (@event is not InputEventKey {Pressed: true, PhysicalKeycode: Key.Escape})
 			return;
 		
-		HidePauseMenu();
+		if (!GetViewport().IsInputHandled())
+			HidePauseMenu();
 		GetViewport().SetInputAsHandled();
 	}
 

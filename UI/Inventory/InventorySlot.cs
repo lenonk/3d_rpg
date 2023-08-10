@@ -3,6 +3,9 @@ using System;
 using System.Threading.Tasks;
 
 public partial class InventorySlot : Panel {
+	[Export] public SlotType Type;				// What type of slot this is
+	[Export] public Items.ItemType ItemType;	// What type of item this slot can hold
+	
 	private Items.Item? _item;
 	private TextureRect _icon;
 	private Label _count;
@@ -13,6 +16,11 @@ public partial class InventorySlot : Panel {
 	private PackedScene _hoverScene = ResourceLoader.Load<PackedScene>("res://UI/Inventory/SlotHover.tscn");
 	private PackedScene _dragPreviewScene = ResourceLoader.Load<PackedScene>("res://UI/DragPreview/DragPreview.tscn");
 	private PackedScene _dragDialogScene = ResourceLoader.Load<PackedScene>("res://UI/DragDialog/DragDialog.tscn");
+
+	public enum SlotType {
+		Inventory,
+		Equipment
+	}
 	
 	private partial class DragData : Control {
 		public InventorySlot Slot;
@@ -34,7 +42,7 @@ public partial class InventorySlot : Panel {
 		_icon.Texture = GD.Load<Texture2D>(item.Icon);
 	}
 	
-	private void NewItem(Items.Item item) {
+	private void CopyItem(Items.Item item) {
 		if (item is null) return;
 		
 		_item = Items.Item.CreateItem(item.Name);
@@ -44,9 +52,9 @@ public partial class InventorySlot : Panel {
 	private void SetCount(int c) {
 		if (_item is null) return;
 		
-		_item.Count = c;
+		_item.Count = Math.Max(0, c);
 
-		if (c <= 1) {
+		if (_item.Count <= 1) {
 			_count.Visible = false;
 			return;
 		}
@@ -70,9 +78,10 @@ public partial class InventorySlot : Panel {
 	}
 	
 	private void OnSlotMouseEntered() {
+		
 		if (_item is null || _dragging) return;
 
-		if (_hoverScene.Instantiate() is SlotHover hp) {
+		if (_hoverScene.Instantiate() is SlotHover { } hp) {
 			_hoverPanel = hp;
 			AddChild(_hoverPanel);
 			SetupHoverPanel();
@@ -96,43 +105,51 @@ public partial class InventorySlot : Panel {
 		}
 	}
 
-	private void ReplaceSlot(DragData dragData) {
+	private void SwapSlot(DragData dragData) {
 		if (_item is null) return;
 		
-		Items.Item tmpItem = Items.CreateItem(_item.Name);
+		var tmpItem = Items.CreateItem(_item.Name);
 		tmpItem.Count = _item.Count;
+		
 		SetItem(dragData.Slot._item);
-
 		dragData.Slot.SetItem(tmpItem);	
 	}
 	
 	private async Task ShowDragDialog() {
-		if (_dragDialogScene.Instantiate() is DragDialog dialog) {
+		if (_dragDialogScene.Instantiate() is DragDialog { } dialog) {
 			AddChild(dialog);
 			dialog.Connect(DragDialog.SignalName.DragDialogClose, 
 				new Callable(this, nameof(OnDragDialogClose)));
 			await ToSignal(dialog, DragDialog.SignalName.DragDialogClose);
 		}
 	}
-	
+
+	private void CreateDragPreview(Texture2D texture) {
+		if (_dragPreviewScene.Instantiate() is DragPreview { } preview) {
+			preview.Texture = texture;
+			AddChild(preview);
+		}
+	}
+		
 	public override async void _DropData(Vector2 atPosition, Variant data) {
 		var dragData = (DragData)data;
 
 		if (Input.IsActionPressed("ui_shift")) {
 			await ShowDragDialog();
 			dragData.Count = Math.Max(0, Math.Min(_dragNumber, dragData.Count));
+			if (dragData.Count <= 0) return;
 		}
 
 		switch (_item, dragData.Slot._item) {
 			case (null, var item):
-				NewItem(item);
+				CopyItem(item);
 				SetCount(dragData.Count);
 				break;
 			case var (item1, item2) when item1 == item2:
 				SetCount(item1.Count + dragData.Count);
 				break;
 			case var (item1, item2):
-				ReplaceSlot(dragData);
+				SwapSlot(dragData);
 				return;
 		}
 
@@ -146,16 +163,26 @@ public partial class InventorySlot : Panel {
 		DragData dragData = new();
 		dragData.Slot = this;
 		dragData.Count = _item.Count;
-	
-		if (_dragPreviewScene.Instantiate() is DragPreview preview) {
-			preview.Texture = _icon.Texture;
-			AddChild(preview);
-		}
-
+		
+		CreateDragPreview(_icon.Texture);
 		_dragging = true;
 		return dragData;
 	}
+
+	public override bool _CanDropData(Vector2 atPosition, Variant data) {
+		var dragData = (DragData)data;
+
+		switch (Type, ItemType, dragData.Slot._item.Type) {
+			case (SlotType.Inventory, _, _):
+				return true;
+			case (SlotType.Equipment, var lType, var rType) when lType == rType:
+				if (lType != Items.ItemType.Misc)
+					dragData.Count = 1;
+				return true;
+		}
+
+		return false;
+	}
 	
-	public override bool _CanDropData(Vector2 atPosition, Variant data) => true;
 	private void OnDragDialogClose(int result) => _dragNumber = result;
 }
