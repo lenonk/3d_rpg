@@ -1,12 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx3gbabsepw6e"]
+[gd_scene load_steps=6 format=3 uid="uid://bx3gbabsepw6e"]
 
 [ext_resource type="Theme" uid="uid://dbip4wxb2paxx" path="res://UI/Theme/MinimalUI.tres" id="1_gkj13"]
 [ext_resource type="Script" path="res://UI/PauseMenu/PauseMenu.cs" id="1_wossw"]
 [ext_resource type="Environment" uid="uid://dsh84kftrugi" path="res://Environments/Outside.tres" id="3_6xhfw"]
 [ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/InventorySlot.tscn" id="3_efpkm"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_a1u3r"]
-viewport_path = NodePath("SubViewport")
 
 [sub_resource type="World3D" id="World3D_0lni4"]
 environment = ExtResource("3_6xhfw")
@@ -15,7 +12,7 @@ environment = ExtResource("3_6xhfw")
 process_mode = 2
 script = ExtResource("1_wossw")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_gkj13")
 
-[node name="Button" type="Button" parent="Panel"]
+[node name="CloseButton" type="Button" parent="Background"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -36,7 +33,7 @@ grow_horizontal = 0
 text = "Close
 "
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Panel"]
+[node name="InventoryContainer" type="HFlowContainer" parent="Background"]
 layout_mode = 2
 offset_left = 1772.0
 offset_top = 509.0
@@ -48,38 +45,39 @@ size_flags_horizontal = 8
 size_flags_vertical = 4
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/HFlowContainer"]
+[node name="InventoryLabel" type="Label" parent="Background/InventoryContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 28
 text = "Inventory"
 
-[node name="GridContainer" type="GridContainer" parent="Panel/HFlowContainer"]
+[node name="InventoryGrid" type="GridContainer" parent="Background/InventoryContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 13
 
-[node name="Slot" parent="Panel/HFlowContainer/GridContainer" instance=ExtResource("3_efpkm")]
+[node name="Slot" parent="Background/InventoryContainer/InventoryGrid" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 
-[node name="Slot2" parent="Panel/HFlowContainer/GridContainer" instance=ExtResource("3_efpkm")]
+[node name="Slot2" parent="Background/InventoryContainer/InventoryGrid" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 
-[node name="Slot3" parent="Panel/HFlowContainer/GridContainer" instance=ExtResource("3_efpkm")]
+[node name="Slot3" parent="Background/InventoryContainer/InventoryGrid" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 
-[node name="Slot4" parent="Panel/HFlowContainer/GridContainer" instance=ExtResource("3_efpkm")]
+[node name="Slot4" parent="Background/InventoryContainer/InventoryGrid" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 
-[node name="Slot5" parent="Panel/HFlowContainer/GridContainer" instance=ExtResource("3_efpkm")]
+[node name="Slot5" parent="Background/InventoryContainer/InventoryGrid" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 
-[node name="Slot6" parent="Panel/HFlowContainer/GridContainer" instance=ExtResource("3_efpkm")]
+[node name="Slot6" parent="Background/InventoryContainer/InventoryGrid" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="CharacterContainer" type="MarginContainer" parent="Background"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -90,67 +88,67 @@ theme_override_constants/margin_top = 150
 theme_override_constants/margin_right = 150
 theme_override_constants/margin_bottom = 150
 
-[node name="Panel" type="Panel" parent="Panel/MarginContainer"]
+[node name="CharacterBackground" type="Panel" parent="Background/CharacterContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Background/CharacterContainer"]
 custom_minimum_size = Vector2(74, 0)
 layout_mode = 2
-offset_right = 74.0
-offset_bottom = 780.0
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 
-[node name="HFlowContainer" type="VFlowContainer" parent="Panel/MarginContainer/Panel/MarginContainer"]
+[node name="EquipmentContainer" type="VFlowContainer" parent="Background/CharacterContainer/MarginContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 780)
 layout_mode = 2
 
-[node name="HeadSlot" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
+[node name="HeadSlot" parent="Background/CharacterContainer/MarginContainer/EquipmentContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 Type = 1
 ItemType = 1
 
-[node name="BodySlot" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
+[node name="BodySlot" parent="Background/CharacterContainer/MarginContainer/EquipmentContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 Type = 1
 ItemType = 2
 
-[node name="WeaponSlot" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
+[node name="WeaponSlot" parent="Background/CharacterContainer/MarginContainer/EquipmentContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 Type = 1
 ItemType = 3
 
-[node name="ShieldSlot" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
+[node name="ShieldSlot" parent="Background/CharacterContainer/MarginContainer/EquipmentContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 Type = 1
 ItemType = 4
 
-[node name="WaistSlot" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer" instance=ExtResource("3_efpkm")]
+[node name="WaistSlot" parent="Background/CharacterContainer/MarginContainer/EquipmentContainer" instance=ExtResource("3_efpkm")]
 layout_mode = 2
 size_flags_vertical = 6
 Type = 1
 ItemType = 5
 
-[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Background/CharacterContainer/MarginContainer/EquipmentContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-texture = SubResource("ViewportTexture_a1u3r")
-stretch_mode = 5
+size_flags_vertical = 6
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="CharacterPortrait" type="SubViewport" parent="Background/CharacterContainer/MarginContainer/EquipmentContainer/SubViewportContainer"]
+unique_name_in_owner = true
 own_world_3d = true
 world_3d = SubResource("World3D_0lni4")
 transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
 render_target_clear_mode = 1
-render_target_update_mode = 3
+render_target_update_mode = 4
 
-[connection signal="pressed" from="Panel/Button" to="." method="OnCloseButtonPressed"]
-[connection signal="EquipmentChangedSignal" from="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer/HeadSlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer/BodySlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer/WeaponSlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer/ShieldSlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Panel/MarginContainer/Panel/MarginContainer/HFlowContainer/WaistSlot" to="." method="OnEquipmentChanged"]
+[connection signal="pressed" from="Background/CloseButton" to="." method="OnCloseButtonPressed"]
+[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/HeadSlot" to="." method="OnEquipmentChanged"]
+[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/BodySlot" to="." method="OnEquipmentChanged"]
+[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/WeaponSlot" to="." method="OnEquipmentChanged"]
+[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/ShieldSlot" to="." method="OnEquipmentChanged"]
+[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/WaistSlot" to="." method="OnEquipmentChanged"]

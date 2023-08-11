@@ -27,6 +27,7 @@ script = ExtResource("1_aprp7")
 
 [node name="Panel" type="PanelContainer" parent="."]
 z_index = 10
+layout_mode = 0
 offset_right = 336.0
 offset_bottom = 198.0
 size_flags_vertical = 0

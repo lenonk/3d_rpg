@@ -1,5 +1,7 @@
 using Godot;
 using Godot.Collections;
+using System;
+using System.Linq;
 using static Items;
 
 public partial class Player : Entity
@@ -8,6 +10,7 @@ public partial class Player : Entity
 	[Export] public float JumpVelocity = 15.5f;
 	[Export] public float Acceleration = 5.5f;
 	[Export] public float FallFactor = 240.5f;
+	[Export] public float MaxLockonDistance = 15.0f;
 
 	[Signal] public delegate void PauseMenuSignalEventHandler(Player p);
 	
@@ -15,9 +18,8 @@ public partial class Player : Entity
 	private AnimationNodeStateMachinePlayback _playback;
 	private State _state = null;
 	private Inventory _inventory = new();
+	private Entity _lockedTarget;
 	
-	private int _health = 10;
-
 	public Vector3 Direction;
 	public Node3D Mesh;
 	
@@ -29,6 +31,7 @@ public partial class Player : Entity
 		_anim = GetNode<AnimationTree>("AnimationTree");
 		_playback = (AnimationNodeStateMachinePlayback)_anim.Get("parameters/playback");
 		Mesh = GetNode<Node3D>("Skeleton3D");
+		Health = MaxHealth = 50;
 		
 		AddToGroup("Players");
 		SetupSignals();
@@ -56,13 +59,24 @@ public partial class Player : Entity
 		Velocity = velocity;
 		MoveAndSlide();
 	}
-	
-	public override void _UnhandledKeyInput(InputEvent @event) {
-		if (@event is not InputEventKey {Pressed: true, PhysicalKeycode: Key.Escape})
-			return;
 
-		EmitSignal(SignalName.PauseMenuSignal, this);
-		GetViewport().SetInputAsHandled();
+	public override void _UnhandledKeyInput(InputEvent @event) {
+		switch (@event) {
+			case InputEventKey {PhysicalKeycode: Key.Escape, Pressed: true}:
+				EmitSignal(SignalName.PauseMenuSignal, this);
+				GetViewport().SetInputAsHandled();
+				break;
+			case InputEventKey {PhysicalKeycode: Key.E, Pressed: true}:
+				var enemies = GetTree().GetNodesInGroup("Enemies");
+
+				Entity closest = null;
+				foreach (Entity enemy in enemies) {
+					if (IsValidTarget(enemy) && DistanceTo(enemy) < DistanceTo(closest))
+						closest = enemy;
+				}
+				_lockedTarget = closest;
+				break;
+		}
 	}	
 	
 	public void ChangeState(string stateName) {
@@ -90,11 +104,6 @@ public partial class Player : Entity
 		Velocity = velocity;
 	}
 	
-	public override void TakeDamage(int value) {
-		_health -= value;
-		if (_health <= 0) Die();
-	}
-    	
 	private Vector3 GetDirection() {
 		return new Vector3(
 			Input.GetActionStrength("WalkLeft") - Input.GetActionStrength("WalkRight"),
@@ -102,7 +111,7 @@ public partial class Player : Entity
 			Input.GetActionStrength("WalkUp") - Input.GetActionStrength("WalkDown"));
 	}
 
-	private void Die() {
+	public override void Die() {
 	}
 
 	private void ChangeEquipment(BoneAttachment3D slot, Item item, bool equip) {
@@ -153,8 +162,11 @@ public partial class Player : Entity
 			new Callable(this, nameof(OnEquipmentChanged)));
 	}
 	
+	
 	public State GetState() => _state;
 	public Inventory GetInventory() => _inventory;
+	private float DistanceTo(Node3D node) => node != null ? GlobalPosition.DistanceTo(node.GlobalPosition) : Mathf.Inf;
+	public bool IsValidTarget(Node node) => node is Entity enemy && DistanceTo(enemy) < MaxLockonDistance && enemy != _lockedTarget;
 	
 	private void BuildInventory() {
 		_inventory.AddItem(CreateItem("Iron Dagger"));

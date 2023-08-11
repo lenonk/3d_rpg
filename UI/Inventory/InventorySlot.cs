@@ -105,7 +105,7 @@ public partial class InventorySlot : Panel {
 			return;
 
 		if (Type == SlotType.Equipment)
-			CheckEquipmentChanged(_item, false);
+			EquipmentChanged(_item, false);
 			
 		_item = null;
 		_icon.Texture = null;
@@ -121,7 +121,7 @@ public partial class InventorySlot : Panel {
 		dragData.Slot.SetItem(tmpItem);	
 	}
 
-	private void CheckEquipmentChanged(Items.Item item, bool equip) {
+	private void EquipmentChanged(Items.Item item, bool equip) {
 		if (Type == SlotType.Equipment)
 			EmitSignal(SignalName.EquipmentChangedSignal, item, equip);
 	}
@@ -155,7 +155,7 @@ public partial class InventorySlot : Panel {
 			case (null, var item):
 				CopyItem(item);
 				SetCount(dragData.Count);
-				CheckEquipmentChanged(item, true);
+				EquipmentChanged(item, true);
 				break;
 			case var (item1, item2) when item1 == item2:
 				SetCount(item1.Count + dragData.Count);
@@ -164,12 +164,12 @@ public partial class InventorySlot : Panel {
 				SwapSlot(dragData);
 
 				if (dragData.Slot.Type == SlotType.Equipment) {
-					dragData.Slot.CheckEquipmentChanged(item2, false);
-					dragData.Slot.CheckEquipmentChanged(item1, true);
+					dragData.Slot.EquipmentChanged(item2, false);
+					dragData.Slot.EquipmentChanged(item1, true);
 				}
 				else {
-					CheckEquipmentChanged(item1, false);
-					CheckEquipmentChanged(item2, true);
+					EquipmentChanged(item1, false);
+					EquipmentChanged(item2, true);
 				}
 				return;
 		}
@@ -204,6 +204,41 @@ public partial class InventorySlot : Panel {
 
 		return false;
 	}
-	
+
+	public override void _Input(InputEvent @event) {
+		switch (@event) {
+			case InputEventMouseButton {ButtonIndex: MouseButton.Left, DoubleClick: true}:
+				if (_item != null && _item.IsWearable()) {
+					if (Type == SlotType.Inventory) {
+						var parent = GetNode("%EquipmentContainer").GetChildren();
+
+						foreach (var node in parent) {
+							if (node is InventorySlot slot && slot.ItemType != _item.Type) {
+								EquipmentChanged(_item, true);
+								slot.SetItem(_item);
+								slot.SetCount(_item.Count);
+								RemoveItem(_item.Count);
+								break;
+							}
+						}
+					}
+					else {
+						var parent = GetNode("%InventoryGrid").GetChildren();
+
+						foreach (var node in parent) {
+							if (node is InventorySlot slot && slot._item == null) {
+								EquipmentChanged(_item, false);
+								slot.SetItem(_item);
+								slot.SetCount(_item.Count);
+								RemoveItem(_item.Count);
+								break;
+							}
+						}
+					}
+				}
+				break;
+		}
+	}
+
 	private void OnDragDialogClose(int result) => _dragNumber = result;
 }

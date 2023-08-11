@@ -531,12 +531,10 @@ shadow_mesh = SubResource("ArrayMesh_2bi8t")
 bones/0/rotation = Quaternion(-0.0124289, 0, 3.79844e-18, 0.999923)
 bones/1/rotation = Quaternion(0.0624804, -1.4232e-25, -1.53718e-17, 0.998046)
 bones/2/rotation = Quaternion(-0.681139, -0.19218, 0.679742, -0.19253)
-bones/3/rotation = Quaternion(0.606617, -0.606617, 0.36334, 0.36334)
 bones/4/rotation = Quaternion(-0.699189, 0.299163, 0.646063, 0.0651065)
-bones/5/rotation = Quaternion(0.300506, -0.376591, 0.679877, 0.55285)
 
 [node name="Head" parent="Skeleton3D" index="0"]
-transform = Transform3D(1, 2.31348e-17, -1.06717e-18, -2.31255e-17, 0.994986, -0.100016, -1.25203e-18, 0.100016, 0.994986, -5.4055e-18, 0.711378, -0.0176874)
+transform = Transform3D(1, 2.31348e-17, -1.06717e-18, -2.31255e-17, 0.994986, -0.100016, -1.25203e-18, 0.100016, 0.994986, -5.40551e-18, 0.711378, -0.0176874)
 
 [node name="character_skeleton_archer_head" type="MeshInstance3D" parent="Skeleton3D/Head" index="0"]
 transform = Transform3D(1, -2.30775e-17, -1.88964e-18, 2.31277e-17, 0.991565, 0.129608, -1.11732e-18, -0.129608, 0.991565, 5.56701e-18, -0.00688058, 0.00144994)
@@ -564,7 +562,7 @@ mesh = SubResource("ArrayMesh_6sbx4")
 skeleton = NodePath("")
 
 [node name="Body" parent="Skeleton3D" index="1"]
-transform = Transform3D(1, -7.59629e-18, -9.44205e-20, 7.59629e-18, 0.999691, 0.0248558, -9.44205e-20, -0.0248558, 0.999691, 0, 0, 0)
+transform = Transform3D(1, -7.59629e-18, -9.44208e-20, 7.59629e-18, 0.999691, 0.0248559, -9.44208e-20, -0.0248559, 0.999691, 0, 0, 0)
 
 [node name="character_skeleton_archer_body" type="MeshInstance3D" parent="Skeleton3D/Body" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.999974, 0.00723929, 0, -0.00723929, 0.999974, 0, 0, 0)
@@ -572,7 +570,7 @@ mesh = SubResource("ArrayMesh_180wp")
 skeleton = NodePath("")
 
 [node name="ArmLeft" parent="Skeleton3D" index="2"]
-transform = Transform3D(0.00203615, 0.523544, -0.851996, -0.0247957, -0.85171, -0.523427, -0.99969, 0.0221917, 0.0112475, 0.14, 0.691384, -0.0171902)
+transform = Transform3D(0.00203574, 0.523544, -0.851996, -0.0247947, -0.85171, -0.523427, -0.999691, 0.0221906, 0.0112471, 0.14, 0.691384, -0.0171903)
 
 [node name="character_skeleton_archer_armLeft" type="MeshInstance3D" parent="Skeleton3D/ArmLeft" index="0"]
 transform = Transform3D(0.000725464, 0.0133504, -0.99991, 0.504999, -0.863048, -0.0111568, -0.86312, -0.504945, -0.00736772, 0.00849305, 0.0824915, -0.0259451)
@@ -580,7 +578,7 @@ mesh = SubResource("ArrayMesh_vi7q0")
 skeleton = NodePath("")
 
 [node name="ArmRight" parent="Skeleton3D" index="3"]
-transform = Transform3D(-0.0137919, -0.502469, -0.864486, -0.357538, -0.804929, 0.473556, -0.933797, 0.315617, -0.16855, -0.14, 0.691384, -0.0171902)
+transform = Transform3D(-0.0137918, -0.502469, -0.864485, -0.357538, -0.804929, 0.473557, -0.933797, 0.315618, -0.16855, -0.14, 0.691384, -0.0171903)
 
 [node name="character_skeleton_archer_armRight" type="MeshInstance3D" parent="Skeleton3D/ArmRight" index="0"]
 transform = Transform3D(-0.0120737, -0.337493, -0.941251, -0.498713, -0.813853, 0.29821, -0.866683, 0.473014, -0.158486, 0.018138, 0.0798799, 0.0276828)
@@ -588,10 +586,10 @@ mesh = SubResource("ArrayMesh_senlh")
 skeleton = NodePath("")
 
 [node name="HandSlotLeft" parent="Skeleton3D" index="4"]
-transform = Transform3D(-0.998227, -0.00203615, -0.0594852, -0.0595175, 0.0247957, 0.997919, -0.000556923, 0.99969, -0.024873, 0.428432, 0.222159, -0.00496435)
+transform = Transform3D(-0.998227, -0.00203574, -0.0594853, -0.0595174, 0.0247947, 0.997919, -0.000556716, 0.999691, -0.0248719, 0.428432, 0.222159, -0.00496496)
 
 [node name="HandSlotRight" parent="Skeleton3D" index="5"]
-transform = Transform3D(-0.974338, 0.221721, -0.0387872, 0.0421818, 0.349128, 0.936125, 0.2211, 0.910466, -0.349522, -0.416821, 0.247931, 0.15669)
+transform = Transform3D(-0.974338, 0.221721, -0.0387869, 0.0421821, 0.349129, 0.936125, 0.2211, 0.910466, -0.349522, -0.416821, 0.247931, 0.15669)
 
 [node name="Dagger" parent="Skeleton3D/HandSlotRight" index="0" instance=ExtResource("2_ujnbu")]
 transform = Transform3D(0.0545845, 0.193447, 0.979592, -0.254887, 0.951252, -0.173648, -0.965429, -0.240207, 0.101231, -0.101958, -0.149317, 0.0886471)

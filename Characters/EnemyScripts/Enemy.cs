@@ -10,7 +10,6 @@ public partial class Enemy : Entity {
 	private Player _target;
 	private Vector3 _direction;
 	private Node3D _mesh;
-	private int _health = 10;
 
 	private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	
@@ -25,6 +24,8 @@ public partial class Enemy : Entity {
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 
 		GetNode<AnimationTree>("AnimationTree").Active = false;
+		
+		AddToGroup("Enemies");
 	}
 
 	public override void _PhysicsProcess(double delta) {
@@ -58,11 +59,6 @@ public partial class Enemy : Entity {
 		MoveAndSlide();
 	}
 	
-	public override void TakeDamage(int value) {
-		if (_health > 0 && (_health -= value) <= 0)
-			Die();
-	}
-
 	private Vector3 GetMeshRotationAngle(double delta) {
 		Vector3 angle = _mesh.Rotation; 
 		angle.Y = (float)Mathf.LerpAngle(
@@ -92,7 +88,7 @@ public partial class Enemy : Entity {
 		return collisionShape;
 	}
 
-	private async void Die() {
+	public override async void Die() {
 		SetPhysicsProcess(false);
 		_animationPlayer.Stop();
 		_animationPlayer.Play("Defeat");

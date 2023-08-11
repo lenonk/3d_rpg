@@ -2,6 +2,9 @@ using Godot;
 using System;
 
 public partial class Entity : CharacterBody3D {
+	[Export] public int MaxHealth = 10;
+	[Export] public int Health = 10;
+	
 	public float Size;
 
 	public override void _Ready() {
@@ -10,5 +13,10 @@ public partial class Entity : CharacterBody3D {
 	}
 
 	public virtual void TakeDamage(int value) {
+		if (Health > 0 && (Health -= value) <= 0)
+			Die();
+	}
+
+	public virtual void Die() {
 	}
 }

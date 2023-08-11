@@ -55,6 +55,8 @@ public partial class Items : Node {
 		public string Scene       { get => _item?.Scene ?? ""; }
 		public int Value          { get => _item?.Value ?? 0; }
 		public ItemType Type      { get => _item?.Type ?? ItemType.None; }
+
+		public bool IsWearable() => Type != ItemType.Misc && Type != ItemType.None;
 	}
 
 	public static Item CreateItem(string name) => Item.CreateItem(name);
