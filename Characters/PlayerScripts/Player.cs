@@ -39,7 +39,6 @@ public partial class Player : Entity
 		
 		// TODO: Remove this.  Testing only!
 		BuildInventory();
-		RenderingServer.SetDefaultClearColor(Colors.DodgerBlue);
 	}
 	
 	public override void _PhysicsProcess(double delta) {
@@ -123,7 +122,9 @@ public partial class Player : Entity
 		}
 		else {
 			foreach (var node in slot.GetChildren()) {
-				if (node.Name == item.Name) node.QueueFree();
+				if (node.Name == item.Name) {
+					node.Free();
+				}
 			}
 		}
 

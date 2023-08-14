@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dbip4wxb2paxx" path="res://UI/Theme/MinimalUI.tres" id="1_gkj13"]
 [ext_resource type="Script" path="res://UI/PauseMenu/PauseMenu.cs" id="1_wossw"]
 [ext_resource type="Environment" uid="uid://dsh84kftrugi" path="res://Environments/Outside.tres" id="3_6xhfw"]
-[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/InventorySlot.tscn" id="3_efpkm"]
+[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/Slot.tscn" id="3_efpkm"]
 
 [sub_resource type="World3D" id="World3D_0lni4"]
 environment = ExtResource("3_6xhfw")
@@ -147,8 +147,3 @@ render_target_clear_mode = 1
 render_target_update_mode = 4
 
 [connection signal="pressed" from="Background/CloseButton" to="." method="OnCloseButtonPressed"]
-[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/HeadSlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/BodySlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/WeaponSlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/ShieldSlot" to="." method="OnEquipmentChanged"]
-[connection signal="EquipmentChangedSignal" from="Background/CharacterContainer/MarginContainer/EquipmentContainer/WaistSlot" to="." method="OnEquipmentChanged"]

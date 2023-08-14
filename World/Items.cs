@@ -18,6 +18,7 @@ public partial class Items : Node {
 		string Name, 
 		string Description, 
 		int Value, 
+		int StackSize,
 		ItemType Type, 
 		string Icon,
 		string Scene
@@ -54,6 +55,7 @@ public partial class Items : Node {
 		public string Icon        { get => _item?.Icon ?? ""; }
 		public string Scene       { get => _item?.Scene ?? ""; }
 		public int Value          { get => _item?.Value ?? 0; }
+		public int StackSize      { get => _item?.StackSize ?? 0; }
 		public ItemType Type      { get => _item?.Type ?? ItemType.None; }
 
 		public bool IsWearable() => Type != ItemType.Misc && Type != ItemType.None;
@@ -67,6 +69,7 @@ public partial class Items : Node {
 			"Iron Dagger", 
 			"A common iron dagger.", 
 			100, 
+			1,
 			ItemType.Weapon,
 			"res://Assets/Icons/iron_dagger.png",
 			"res://Characters/Weapons/Dagger/Dagger.tscn")
@@ -75,6 +78,7 @@ public partial class Items : Node {
 			"Iron Double Axe", 
 			"A common iron double axe.", 
 			150,
+			1,
 			ItemType.Weapon,
 			"res://Assets/Icons/iron_double_axe.png",
 			"res://Characters/Weapons/DoubleAxe/DoubleAxe.tscn")
@@ -84,6 +88,7 @@ public partial class Items : Node {
 			"Magical Sword", 
 			"A magical sword.", 
 			10000,
+			1,
 			ItemType.Weapon,
 			"res://Assets/Icons/magical_sword.png",
 			"res://Characters/Weapons/Dagger/Dagger.tscn")
@@ -92,6 +97,7 @@ public partial class Items : Node {
 			"Archer's Hood", 
 			"An identity concealing hood made for archers.", 
 			1000,
+			1,
 			ItemType.Head,
 			"res://Assets/Icons/archer_hood.png",
 			"res://Characters/Armor/ArcherHood/ArcherHood.tscn")
@@ -100,6 +106,7 @@ public partial class Items : Node {
 			"Archer's Bandolier", 
 			"An bandolier made for archers. It has many pockets and a quiver for your arrows.", 
 			1000,
+			1,
 			ItemType.Body,
 			"res://Assets/Icons/archer_body.png",
 			"res://Characters/Armor/ArcherBody/ArcherBody.tscn")
@@ -108,6 +115,7 @@ public partial class Items : Node {
 			"Wooden Shield", 
 			"A shield. Made of wood.", 
 			1000,
+			1,
 			ItemType.Shield,
 			"res://Assets/Icons/shield_common.png",
 			"res://Characters/Armor/WoodenShield/WoodenShield.tscn")

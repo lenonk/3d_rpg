@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://miubwv3v41ww"]
 
 [ext_resource type="Theme" uid="uid://dbip4wxb2paxx" path="res://UI/Theme/MinimalUI.tres" id="1_k57sf"]
-[ext_resource type="Script" path="res://UI/Inventory/InventorySlot.cs" id="2_us4lk"]
+[ext_resource type="Script" path="res://UI/Inventory/Slot.cs" id="2_us4lk"]
 
-[node name="InventorySlot" type="Panel"]
+[node name="Slot" type="Panel"]
 y_sort_enabled = true
 custom_minimum_size = Vector2(64, 64)
 offset_right = 64.0

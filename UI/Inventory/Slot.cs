@@ -2,18 +2,17 @@ using Godot;
 using System;
 using System.Threading.Tasks;
 
-public partial class InventorySlot : Panel {
+public partial class Slot : Panel {
 	[Export] public SlotType Type;				// What type of slot this is
 	[Export] public Items.ItemType ItemType;	// What type of item this slot can hold
 
-	[Signal] public delegate void EquipmentChangedSignalEventHandler(Items.Item item, bool equip);
-	
 	private Items.Item? _item;
 	private TextureRect _icon;
 	private Label _count;
 	private SlotHover _hoverPanel;
-	private bool _dragging = false;
+	private bool _dragging;
 	private int _dragNumber = 1;
+	private PauseMenu _pauseMenu;
     
 	private PackedScene _hoverScene = ResourceLoader.Load<PackedScene>("res://UI/Inventory/SlotHover.tscn");
 	private PackedScene _dragPreviewScene = ResourceLoader.Load<PackedScene>("res://UI/DragPreview/DragPreview.tscn");
@@ -25,7 +24,7 @@ public partial class InventorySlot : Panel {
 	}
 	
 	private partial class DragData : Control {
-		public InventorySlot Slot;
+		public Slot Slot;
 		public int Count;
 	}
     	
@@ -34,6 +33,13 @@ public partial class InventorySlot : Panel {
 		_count = GetNode<Label>("Count");
 		_count.Visible = false;
 		_item = null;
+		
+		var parent = GetParent();
+        
+		while (parent != null && parent is not CanvasLayer)
+			parent = parent.GetParent();
+
+		_pauseMenu = parent as PauseMenu;
 	}
 
 	public void SetItem(Items.Item item) {
@@ -44,14 +50,15 @@ public partial class InventorySlot : Panel {
 		_icon.Texture = GD.Load<Texture2D>(item.Icon);
 	}
 	
-	private void CopyItem(Items.Item item) {
+	public void CopyItem(Items.Item item) {
 		if (item is null) return;
 		
 		_item = Items.Item.CreateItem(item.Name);
+		_item.Count = item.Count;
 		_icon.Texture = GD.Load<Texture2D>(item.Icon);
 	}
 	
-	private void SetCount(int c) {
+	public void SetCount(int c) {
 		if (_item is null) return;
 		
 		_item.Count = Math.Max(0, c);
@@ -109,21 +116,23 @@ public partial class InventorySlot : Panel {
 			
 		_item = null;
 		_icon.Texture = null;
+		_hoverPanel?.QueueFree();
+		_hoverPanel = null;
 	}
 
-	private void SwapSlot(DragData dragData) {
+	private void SwapSlot(Slot slot) {
 		if (_item is null) return;
 		
 		var tmpItem = Items.CreateItem(_item.Name);
 		tmpItem.Count = _item.Count;
 		
-		SetItem(dragData.Slot._item);
-		dragData.Slot.SetItem(tmpItem);	
+		SetItem(slot._item);
+		slot.SetItem(tmpItem);	
 	}
 
 	private void EquipmentChanged(Items.Item item, bool equip) {
 		if (Type == SlotType.Equipment)
-			EmitSignal(SignalName.EquipmentChangedSignal, item, equip);
+			_pauseMenu.EmitSignal(PauseMenu.SignalName.EquipmentChangedSignal, item, equip);
 	}
 	
 	private async Task ShowDragDialog() {
@@ -161,7 +170,7 @@ public partial class InventorySlot : Panel {
 				SetCount(item1.Count + dragData.Count);
 				break;
 			case var (item1, item2):
-				SwapSlot(dragData);
+				SwapSlot(dragData.Slot);
 
 				if (dragData.Slot.Type == SlotType.Equipment) {
 					dragData.Slot.EquipmentChanged(item2, false);
@@ -205,35 +214,105 @@ public partial class InventorySlot : Panel {
 		return false;
 	}
 
-	public override void _Input(InputEvent @event) {
+	private Slot FindSlot(Node parent, Predicate<Slot> predicate) {
+		foreach (var node in parent.GetChildren()) {
+			if (node is Slot slot && predicate(slot))
+				return slot;
+		}
+
+		return null;
+	}
+
+	private Slot FindInventorySlot(Node parent, Func<Slot, bool> condition) =>
+		FindSlot(parent, slot => slot.Type == SlotType.Inventory && (slot._item is null || condition(slot)));
+
+	private Slot FindEquipmentSlot(Node parent, Items.ItemType itype) =>
+		FindSlot(parent, slot => slot.Type == SlotType.Equipment && slot.ItemType == itype);
+	
+	// This function is disgusting, but it took me a long time to get it exactly right,
+	// covering all the edge cases, and I'm scared to refactor it.
+	private void MoveItemToSlot(Slot slot, Func<Slot, bool> condition) {
+		if (!condition(slot))
+			return;
+
+		switch (Type) {
+			case SlotType.Inventory when slot._item is not null:
+			{
+				if (slot._item == _item && _item.StackSize > 1) {
+					slot.SetCount(slot._item.Count + _item.Count);
+					RemoveItem(1);
+					return;
+				}
+
+				Slot newSlot;
+				if ((newSlot = FindInventorySlot(_pauseMenu.GetNode("%InventoryGrid"), 
+					    slot => slot._item is null)) == null)
+					return;
+			
+				slot.EquipmentChanged(slot._item, false);
+				newSlot.CopyItem(slot._item);
+				slot.RemoveItem(slot._item.Count);
+				
+				slot.CopyItem(_item);
+				slot.SetCount(1);
+				RemoveItem(1);
+				slot.EquipmentChanged(slot._item, true);
+				break;
+			}
+			case SlotType.Inventory:
+				slot.CopyItem(_item);
+				slot.SetCount(1);
+				RemoveItem(1);
+				slot.EquipmentChanged(slot._item, true);
+				break;
+			case SlotType.Equipment:
+			{
+				if (slot._item is not null && slot._item == _item) {
+					if (_item.StackSize > 1) {
+						slot.SetCount(slot._item.Count + _item.Count);
+						RemoveItem(_item.Count);
+						return;
+					}
+					
+					Slot newSlot;
+					if ((newSlot = FindInventorySlot(_pauseMenu.GetNode("%InventoryGrid"), 
+					    slot => slot._item is null)) == null)
+						return;
+					EquipmentChanged(_item, false);
+					newSlot.CopyItem(slot._item);
+					RemoveItem(slot._item.Count);
+					return;
+				}
+				
+				slot.CopyItem(_item);
+				slot.SetCount(_item.Count);
+				EquipmentChanged(_item, false);
+				RemoveItem(_item.Count);
+				break;
+			}
+		}
+	}
+	
+	public override void _GuiInput(InputEvent @event) {
 		switch (@event) {
 			case InputEventMouseButton {ButtonIndex: MouseButton.Left, DoubleClick: true}:
-				if (_item != null && _item.IsWearable()) {
+				if (_item is not null && _item.IsWearable()) {
 					if (Type == SlotType.Inventory) {
-						var parent = GetNode("%EquipmentContainer").GetChildren();
-
-						foreach (var node in parent) {
-							if (node is InventorySlot slot && slot.ItemType != _item.Type) {
-								EquipmentChanged(_item, true);
-								slot.SetItem(_item);
-								slot.SetCount(_item.Count);
-								RemoveItem(_item.Count);
-								break;
-							}
-						}
+						var parent = _pauseMenu.GetNode("%EquipmentContainer");
+						Slot slot;
+						if ((slot = FindEquipmentSlot(parent, _item.Type)) == null)
+							return;
+						
+						MoveItemToSlot(slot, slot => true);
 					}
 					else {
-						var parent = GetNode("%InventoryGrid").GetChildren();
-
-						foreach (var node in parent) {
-							if (node is InventorySlot slot && slot._item == null) {
-								EquipmentChanged(_item, false);
-								slot.SetItem(_item);
-								slot.SetCount(_item.Count);
-								RemoveItem(_item.Count);
-								break;
-							}
-						}
+						var parent = _pauseMenu.GetNode("%InventoryGrid");
+						Slot slot;
+						if ((slot = FindInventorySlot(parent, 
+							    slot => _item is not null && slot._item == _item)) == null)
+							return;
+						
+						MoveItemToSlot(slot, slot => true);
 					}
 				}
 				break;

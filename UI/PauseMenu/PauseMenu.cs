@@ -1,11 +1,12 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class PauseMenu : CanvasLayer {
-	[Signal] public delegate void EquipmentChangedSignalEventHandler(Items.Item item);
+	[Signal] public delegate void EquipmentChangedSignalEventHandler(Items.Item item, bool equip);
 	
 	private GridContainer _container;
-	private PackedScene _slot = ResourceLoader.Load<PackedScene>("res://UI/Inventory/InventorySlot.tscn");
+	private PackedScene _slot = ResourceLoader.Load<PackedScene>("res://UI/Inventory/Slot.tscn");
 	private Viewport _viewPort;
 	private TextureRect _texture;
 
@@ -37,10 +38,20 @@ public partial class PauseMenu : CanvasLayer {
 
 		_viewPort.AddChild(pDuplicate);
 		camera.Position = Vector3.Zero;
-		camera.Rotation = Vector3.Zero;
+		camera.Rotation = new Vector3(0, _player.Mesh.Rotation.Y, 0);
 		spring.SpringLength = 1.6f;
 		spring.Position = new Vector3(0.0f, 0.75f, 0.0f);
 		spring.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
+	}
+
+	private Slot AddSlot() {
+		if (_slot.Instantiate() is not Slot slot) return null;
+		_container.AddChild(slot);
+		slot.Visible = true;
+		slot.Type = Slot.SlotType.Inventory;
+		slot.ItemType = Items.ItemType.None;
+
+		return slot;
 	}
 	
 	private void ShowPauseMenu(Player p) {
@@ -52,22 +63,30 @@ public partial class PauseMenu : CanvasLayer {
 			child.QueueFree();
 		}
 
-		foreach (Items.Item item in p.GetInventory().GetItems()) {
-			if (_slot.Instantiate() is not InventorySlot slot) return;
-			if (!item.IsWearing) {
-				_container.AddChild(slot);
-				slot.SetItem(item);
-				slot.Visible = true;
-				slot.Type = InventorySlot.SlotType.Inventory;
-				slot.ItemType = Items.ItemType.None;
+		var count = 0;
+		foreach (var item in p.GetInventory().GetItems().Where(item => !item.IsWearing)) {
+			if (item.StackSize > 1) {
+				var slot = AddSlot();
+				slot.CopyItem(item);
+				count += item.Count;
 			}
+			else {
+				for (var i = 0; i < item.Count; i++) {
+					var slot = AddSlot();
+					slot.CopyItem(item);
+					slot.SetCount(1);
+					count++;
+				}	
+			}
+
+			if (count >= Inventory.MaxSize) break;
 		}
 
-		for (int i = p.GetInventory().GetItems().Count; i < Inventory.MaxSize; i++) {
-			if (_slot.Instantiate() is not InventorySlot slot) return;
+		for (int i = count; i < Inventory.MaxSize; i++) {
+			if (_slot.Instantiate() is not Slot slot) return;
 			_container.AddChild(slot);
 			slot.Visible = true;
-			slot.Type = InventorySlot.SlotType.Inventory;
+			slot.Type = Slot.SlotType.Inventory;
 			slot.ItemType = Items.ItemType.None;
 		}
 		
@@ -90,8 +109,5 @@ public partial class PauseMenu : CanvasLayer {
 		}
 	}
 
-	public void OnEquipmentChanged(Items.Item item, bool equip) => 
-		EmitSignal(SignalName.EquipmentChangedSignal, item, equip);
-	
 	private void OnCloseButtonPressed() => HidePauseMenu();
 }
