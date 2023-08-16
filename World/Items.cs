@@ -40,8 +40,6 @@ public partial class Items : Node {
 			IsWearing = false;
 		}
 
-		public static bool operator ==(Item i1, Item i2) => i1.Name == i2.Name;
-		public static bool operator !=(Item i1, Item i2) => i1.Name != i2.Name;
 		public static Item CreateItem(string name) => new(GameItems[name]);
 		public static bool IsItem(string name) => GameItems.ContainsKey(name);
 		
@@ -59,6 +57,10 @@ public partial class Items : Node {
 		public ItemType Type      { get => _item?.Type ?? ItemType.None; }
 
 		public bool IsWearable() => Type != ItemType.Misc && Type != ItemType.None;
+		public bool IsStackable() => StackSize > 1;
+		
+		public static bool operator ==(Item i1, Item i2) => i1?.Name == i2?.Name;
+		public static bool operator !=(Item i1, Item i2) => i1?.Name != i2?.Name;
 	}
 
 	public static Item CreateItem(string name) => Item.CreateItem(name);
@@ -119,6 +121,15 @@ public partial class Items : Node {
 			ItemType.Shield,
 			"res://Assets/Icons/shield_common.png",
 			"res://Characters/Armor/WoodenShield/WoodenShield.tscn")
+		},
+		{"Minor Health Potion", new(
+			"Minor Health Potion", 
+			"A health potion that does nothing.", 
+			1,
+			99,
+			ItemType.Misc,
+			"res://Assets/Icons/minor_health_potion.png",
+			"")
 		},
 	};
 }

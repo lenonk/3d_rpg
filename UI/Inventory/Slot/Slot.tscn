@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://miubwv3v41ww"]
+
+[ext_resource type="Theme" uid="uid://dbip4wxb2paxx" path="res://UI/Theme/MinimalUI.tres" id="1_1pxid"]
+[ext_resource type="Script" path="res://UI/Inventory/Slot/Slot.cs" id="2_1k7h0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r74er"]
+bg_color = Color(0.158472, 0.158472, 0.158472, 0.929412)
+
+[node name="Slot" type="Panel"]
+y_sort_enabled = true
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+theme = ExtResource("1_1pxid")
+theme_override_styles/panel = SubResource("StyleBoxFlat_r74er")
+script = ExtResource("2_1k7h0")
+
+[node name="Icon" type="TextureRect" parent="."]
+y_sort_enabled = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Count" type="Label" parent="."]
+y_sort_enabled = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -26.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 2
+
+[connection signal="mouse_entered" from="." to="." method="OnSlotMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnSlotMouseExited"]

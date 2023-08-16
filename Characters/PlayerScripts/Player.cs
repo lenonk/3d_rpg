@@ -1,7 +1,4 @@
 using Godot;
-using Godot.Collections;
-using System;
-using System.Linq;
 using static Items;
 
 public partial class Player : Entity
@@ -12,8 +9,6 @@ public partial class Player : Entity
 	[Export] public float FallFactor = 240.5f;
 	[Export] public float MaxLockonDistance = 15.0f;
 
-	[Signal] public delegate void PauseMenuSignalEventHandler(Player p);
-	
 	private AnimationTree _anim;
 	private AnimationNodeStateMachinePlayback _playback;
 	private State _state = null;
@@ -59,12 +54,8 @@ public partial class Player : Entity
 		MoveAndSlide();
 	}
 
-	public override void _UnhandledKeyInput(InputEvent @event) {
+	public override void _UnhandledInput(InputEvent @event) {
 		switch (@event) {
-			case InputEventKey {PhysicalKeycode: Key.Escape, Pressed: true}:
-				EmitSignal(SignalName.PauseMenuSignal, this);
-				GetViewport().SetInputAsHandled();
-				break;
 			case InputEventKey {PhysicalKeycode: Key.E, Pressed: true}:
 				var enemies = GetTree().GetNodesInGroup("Enemies");
 
@@ -76,8 +67,8 @@ public partial class Player : Entity
 				_lockedTarget = closest;
 				break;
 		}
-	}	
-	
+	}
+
 	public void ChangeState(string stateName) {
 		_state?.Exit();
 		_state?.QueueFree();
@@ -128,7 +119,7 @@ public partial class Player : Entity
 			}
 		}
 
-		if (_inventory.GetItem(item.Name, out var i))
+		if (_inventory.GetItem(item, out var i))
 			i.IsWearing = equip;
 	}
 	
@@ -158,16 +149,17 @@ public partial class Player : Entity
 	}
 	
 	private void SetupSignals() {
-		var pm = GetTree().Root.GetNode<PauseMenu>("World/PauseMenu");
+		/*var pm = GetTree().Root.GetNode<PauseMenu>("World/PauseMenu");
 		pm.Connect(PauseMenu.SignalName.EquipmentChangedSignal, 
-			new Callable(this, nameof(OnEquipmentChanged)));
+			new Callable(this, nameof(OnEquipmentChanged)));*/
 	}
-	
 	
 	public State GetState() => _state;
 	public Inventory GetInventory() => _inventory;
 	private float DistanceTo(Node3D node) => node != null ? GlobalPosition.DistanceTo(node.GlobalPosition) : Mathf.Inf;
 	public bool IsValidTarget(Node node) => node is Entity enemy && DistanceTo(enemy) < MaxLockonDistance && enemy != _lockedTarget;
+	public void ToggleHealthBar(bool visible) => GetNode<HealthBar3D>("Skeleton3D/Head/HealthBar3D").Visible = visible;
+	
 	
 	private void BuildInventory() {
 		_inventory.AddItem(CreateItem("Iron Dagger"));
@@ -177,5 +169,9 @@ public partial class Player : Entity
 		_inventory.AddItem(CreateItem("Wooden Shield"));
 		_inventory.AddItem(CreateItem("Magical Sword"));
 		_inventory.AddItem(CreateItem("Magical Sword"));
+		
+		Item pot = CreateItem("Minor Health Potion");
+		pot.Count = 97;
+		_inventory.AddItem(pot);
 	}
 }

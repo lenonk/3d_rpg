@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=3 uid="uid://bk8o4gbtebgbp"]
+
+[ext_resource type="Environment" uid="uid://dsh84kftrugi" path="res://Environments/Outside.tres" id="1_lbrki"]
+[ext_resource type="Script" path="res://UI/Inventory/InventoryUI.cs" id="1_qxeya"]
+[ext_resource type="PackedScene" uid="uid://c76gn764kx888" path="res://UI/Inventory/CharacterInfo/CharacterInfo.tscn" id="2_d31cc"]
+[ext_resource type="PackedScene" uid="uid://cctd6r3vucdex" path="res://UI/Inventory/Equipment/Equipment.tscn" id="3_42ult"]
+[ext_resource type="PackedScene" uid="uid://d38c3vr00ac76" path="res://UI/Inventory/InventoryContainer/InventoryContainer.tscn" id="4_ias33"]
+[ext_resource type="Texture2D" uid="uid://c182lpuqhpsjs" path="res://Assets/Icons/pngegg.png" id="6_nxcy0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1rlb"]
+bg_color = Color(0.0901961, 0.0901961, 0.0901961, 0.929412)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.65098, 0.435294, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
+
+[sub_resource type="World3D" id="World3D_sghe6"]
+environment = ExtResource("1_lbrki")
+
+[node name="InventoryUI" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_qxeya")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -643.5
+offset_top = -390.0
+offset_right = 643.5
+offset_bottom = 390.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_g1rlb")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 6
+
+[node name="CharacterPortrait" type="SubViewport" parent="Panel/SubViewportContainer"]
+unique_name_in_owner = true
+own_world_3d = true
+world_3d = SubResource("World3D_sghe6")
+transparent_bg = true
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1014, 681)
+render_target_clear_mode = 1
+render_target_update_mode = 4
+
+[node name="HFlowContainer" type="HFlowContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterInfo" parent="Panel/HFlowContainer" instance=ExtResource("2_d31cc")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EquipmentContainer" parent="Panel/HFlowContainer" instance=ExtResource("3_42ult")]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="InventoryContainer" parent="Panel/HFlowContainer" instance=ExtResource("4_ias33")]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+
+[node name="CloseButton" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -27.0
+offset_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 0
+texture_normal = ExtResource("6_nxcy0")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="pressed" from="Panel/CloseButton" to="." method="OnClosePressed"]

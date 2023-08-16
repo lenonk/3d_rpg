@@ -10,8 +10,6 @@ public partial class HealthBar2D : TextureProgressBar
 	
 	public override void _Ready() {	
 		_owner = FindOwner();
-		MaxValue = _owner.MaxHealth;
-		
 		greenBar = GD.Load<CompressedTexture2D>("res://Assets/Textures/ProgressBars/green_bar.png");
 		yellowBar = GD.Load<CompressedTexture2D>("res://Assets/Textures/ProgressBars/yellow_bar.png");
 		redBar = GD.Load<CompressedTexture2D>("res://Assets/Textures/ProgressBars/red_bar.png");
@@ -19,10 +17,11 @@ public partial class HealthBar2D : TextureProgressBar
 
 	public override void _PhysicsProcess(double delta) {
 		if (_owner == null) return;
-		
+
+		MaxValue = _owner.MaxHealth;
 		Value = _owner.Health;
-		TextureProgress = greenBar;
 		
+		TextureProgress = greenBar;
 		if (Value < 0.75f * MaxValue)
 			TextureProgress = yellowBar;
 		if (Value < 0.45f * MaxValue)

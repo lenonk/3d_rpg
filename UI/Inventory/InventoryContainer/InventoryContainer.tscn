@@ -1,0 +1,206 @@
+[gd_scene load_steps=3 format=3 uid="uid://d38c3vr00ac76"]
+
+[ext_resource type="Script" path="res://UI/Inventory/InventoryContainer/InventoryContainer.cs" id="1_o5pru"]
+[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/Slot/Slot.tscn" id="2_pngog"]
+
+[node name="InventoryContainer" type="HFlowContainer"]
+offset_right = 412.0
+offset_bottom = 588.0
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 1
+script = ExtResource("1_o5pru")
+
+[node name="InventoryLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 28
+text = "Inventory"
+
+[node name="InventoryGrid" type="GridContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 6
+
+[node name="Slot" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot2" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot3" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot4" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot5" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot6" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot7" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot8" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot9" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot10" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot11" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot12" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot13" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot14" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot15" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot16" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot17" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot18" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot19" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot20" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot21" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot22" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot23" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot24" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot25" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot26" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot27" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot28" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot29" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot30" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot31" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot32" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot33" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot34" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot35" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot36" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot37" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot38" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot39" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot40" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot41" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot42" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot43" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot44" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot45" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot46" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot47" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot48" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot49" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot50" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot51" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot52" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot53" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot54" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot55" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot56" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot57" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot58" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot59" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2
+
+[node name="Slot60" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+layout_mode = 2

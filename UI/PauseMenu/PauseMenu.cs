@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 
 public partial class PauseMenu : CanvasLayer {
-	[Signal] public delegate void EquipmentChangedSignalEventHandler(Items.Item item, bool equip);
+	/*[Signal] public delegate void EquipmentChangedSignalEventHandler(Items.Item item, bool equip);
 	
 	private GridContainer _container;
 	private PackedScene _slot = ResourceLoader.Load<PackedScene>("res://UI/Inventory/Slot.tscn");
@@ -18,7 +18,7 @@ public partial class PauseMenu : CanvasLayer {
 		foreach (var node in GetTree().GetNodesInGroup("Players")) {
 			if (node is not Player p) continue;
 			_player = p;
-			p.PauseMenuSignal += ShowPauseMenu;
+			//p.PauseMenuSignal += ShowPauseMenu;
 		}
 	}
 
@@ -109,5 +109,5 @@ public partial class PauseMenu : CanvasLayer {
 		}
 	}
 
-	private void OnCloseButtonPressed() => HidePauseMenu();
+	private void OnCloseButtonPressed() => HidePauseMenu();*/
 }

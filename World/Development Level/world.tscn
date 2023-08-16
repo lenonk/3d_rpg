@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Characters/PlayerScripts/Player.cs" id="6_1xdse"]
 [ext_resource type="PackedScene" uid="uid://drd7387wbjhc0" path="res://Characters/SkeletonWarrior/SkeletonWarrior.tscn" id="6_wbq65"]
 [ext_resource type="Script" path="res://Characters/EnemyScripts/Enemy.cs" id="7_1mdxr"]
-[ext_resource type="PackedScene" uid="uid://bx3gbabsepw6e" path="res://UI/PauseMenu/PauseMenu.tscn" id="9_du00v"]
+[ext_resource type="PackedScene" uid="uid://bk8o4gbtebgbp" path="res://UI/Inventory/InventoryUI.tscn" id="10_54ulw"]
 
 [node name="World" type="Node3D"]
 
@@ -100,5 +100,5 @@ script = ExtResource("7_1mdxr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.382833, 1.05, 2.19678)
 script = ExtResource("7_1mdxr")
 
-[node name="PauseMenu" parent="." instance=ExtResource("9_du00v")]
+[node name="InventoryUI" parent="." instance=ExtResource("10_54ulw")]
 visible = false

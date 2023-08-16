@@ -1,0 +1,93 @@
+[gd_scene load_steps=4 format=3 uid="uid://xse74v6of07u"]
+
+[ext_resource type="Script" path="res://UI/Inventory/Slot/SlotHover.cs" id="1_aprp7"]
+[ext_resource type="Texture2D" uid="uid://cg1vw0b3a6ftb" path="res://icon.png" id="1_xonqy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s0e40"]
+bg_color = Color(0.105882, 0.105882, 0.105882, 0.803922)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[node name="SlotHover" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 335.0
+offset_bottom = 250.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_aprp7")
+
+[node name="Panel" type="PanelContainer" parent="."]
+z_index = 10
+layout_mode = 0
+offset_right = 336.0
+offset_bottom = 198.0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_s0e40")
+
+[node name="Contents" type="VBoxContainer" parent="Panel"]
+z_index = 11
+layout_mode = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Header" type="HBoxContainer" parent="Panel/Contents"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Panel/Contents/Header"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+texture = ExtResource("1_xonqy")
+stretch_mode = 5
+
+[node name="ItemName" type="RichTextLabel" parent="Panel/Contents/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+bbcode_enabled = true
+text = "[color=green]Item Name[/color]"
+fit_content = true
+scroll_active = false
+
+[node name="HSeparator" type="HSeparator" parent="Panel/Contents"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+
+[node name="Description" type="RichTextLabel" parent="Panel/Contents"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+bbcode_enabled = true
+text = "[i]This is an item desription that may be a bit longer than necessary but I needed to test wrapping.  If the description gets really long the entire hover panel should expand to accomodate, Which is seems to be doing, which is great![/i]"
+fit_content = true
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/Contents"]
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="Footer" type="RichTextLabel" parent="Panel/Contents"]
+layout_direction = 3
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_constants/outline_size = 0
+bbcode_enabled = true
+text = "[right]Value: [color=yellow]100[/color][/right]
+"
+fit_content = true
