@@ -3,8 +3,8 @@
 [ext_resource type="Environment" uid="uid://dsh84kftrugi" path="res://Environments/Outside.tres" id="1_lbrki"]
 [ext_resource type="Script" path="res://UI/Inventory/InventoryUI.cs" id="1_qxeya"]
 [ext_resource type="PackedScene" uid="uid://c76gn764kx888" path="res://UI/Inventory/CharacterInfo/CharacterInfo.tscn" id="2_d31cc"]
-[ext_resource type="PackedScene" uid="uid://cctd6r3vucdex" path="res://UI/Inventory/Equipment/Equipment.tscn" id="3_42ult"]
 [ext_resource type="PackedScene" uid="uid://d38c3vr00ac76" path="res://UI/Inventory/InventoryContainer/InventoryContainer.tscn" id="4_ias33"]
+[ext_resource type="PackedScene" uid="uid://cctd6r3vucdex" path="res://UI/Inventory/EquipmentContainer/EquipmentContainer.tscn" id="4_y4dgt"]
 [ext_resource type="Texture2D" uid="uid://c182lpuqhpsjs" path="res://Assets/Icons/pngegg.png" id="6_nxcy0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1rlb"]
@@ -54,6 +54,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 6
+stretch = true
 
 [node name="CharacterPortrait" type="SubViewport" parent="Panel/SubViewportContainer"]
 unique_name_in_owner = true
@@ -62,7 +63,7 @@ world_3d = SubResource("World3D_sghe6")
 transparent_bg = true
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(1014, 681)
+size = Vector2i(1287, 780)
 render_target_clear_mode = 1
 render_target_update_mode = 4
 
@@ -78,12 +79,14 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EquipmentContainer" parent="Panel/HFlowContainer" instance=ExtResource("3_42ult")]
+[node name="EquipmentContainer" parent="Panel/HFlowContainer" instance=ExtResource("4_y4dgt")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 
 [node name="InventoryContainer" parent="Panel/HFlowContainer" instance=ExtResource("4_ias33")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 10
 size_flags_vertical = 0

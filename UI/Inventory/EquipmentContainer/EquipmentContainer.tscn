@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://cctd6r3vucdex"]
+
+[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/Slot/SlotBase.tscn" id="1_8twqf"]
+[ext_resource type="Script" path="res://UI/Inventory/EquipmentContainer/EquipmentContainer.cs" id="1_wb8mg"]
+[ext_resource type="Script" path="res://UI/Inventory/Slot/EquipmentSlot/EquipmentSlot.cs" id="2_ynlb3"]
+
+[node name="EquipmentContainer" type="VFlowContainer"]
+custom_minimum_size = Vector2(64, 780)
+offset_right = 455.0
+offset_bottom = 780.0
+script = ExtResource("1_wb8mg")
+
+[node name="HeadSlot" parent="." instance=ExtResource("1_8twqf")]
+layout_mode = 2
+size_flags_vertical = 6
+script = ExtResource("2_ynlb3")
+SlotType = 1
+
+[node name="BodySlot" parent="." instance=ExtResource("1_8twqf")]
+layout_mode = 2
+size_flags_vertical = 6
+script = ExtResource("2_ynlb3")
+SlotType = 2
+Index = 1
+
+[node name="WeaponSlot" parent="." instance=ExtResource("1_8twqf")]
+layout_mode = 2
+size_flags_vertical = 6
+script = ExtResource("2_ynlb3")
+SlotType = 3
+Index = 2
+
+[node name="ShieldSlot" parent="." instance=ExtResource("1_8twqf")]
+layout_mode = 2
+size_flags_vertical = 6
+script = ExtResource("2_ynlb3")
+SlotType = 4
+Index = 3
+
+[node name="WaistSlot" parent="." instance=ExtResource("1_8twqf")]
+layout_mode = 2
+size_flags_vertical = 6
+script = ExtResource("2_ynlb3")
+SlotType = 5
+Index = 4

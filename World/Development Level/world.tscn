@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://2tswikmril1"]
 
-[ext_resource type="Environment" uid="uid://bjb6ki0vecu0w" path="res://Environments/Dungeon.tres" id="1_t86n2"]
+[ext_resource type="Environment" uid="uid://dsh84kftrugi" path="res://Environments/Outside.tres" id="1_aivng"]
 [ext_resource type="MeshLibrary" uid="uid://lkaqq6fup2o7" path="res://World/Mesh Libs/walls.tres" id="2_l0h0k"]
 [ext_resource type="MeshLibrary" uid="uid://c4r1neiygodhj" path="res://World/Mesh Libs/floors.tres" id="3_uvl4v"]
 [ext_resource type="PackedScene" uid="uid://dml54srrxs5pi" path="res://World/Objects/Torch/Torch.tscn" id="4_thqek"]
@@ -13,7 +13,7 @@
 [node name="World" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("1_t86n2")
+environment = ExtResource("1_aivng")
 
 [node name="Objects" type="Node3D" parent="."]
 
@@ -82,7 +82,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3773, 6.60543, -33.7424)
 [node name="Characters" type="Node3D" parent="."]
 
 [node name="Player" parent="Characters" instance=ExtResource("5_nkuwl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.85218, 1.3002, -24.5486)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7724, 1.42243, -28.333)
 script = ExtResource("6_1xdse")
 Speed = 5.5
 JumpVelocity = 15.5

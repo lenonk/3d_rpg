@@ -7,41 +7,36 @@ public partial class InventoryUI : CanvasLayer
 	
 	public override void _Ready() {
 		_player = GetTree().GetNodesInGroup("Players")[0] as Player;
+		SetupSubViewport();
 	}
 
 	private void SetupSubViewport() {
 		var svp = GetNode<SubViewport>("%CharacterPortrait");
 		
 		var pDuplicate = _player.Duplicate() as Player;
+		pDuplicate.ToggleHealthBar(false);
+		// This is a hack to keep this instance of the player from falling forever and glitching out
+		pDuplicate.BanGravity(); 
+		
 		var camera = pDuplicate.GetNode<Node3D>("CameraController");
 		var spring = pDuplicate.GetNode<SpringArm3D>("CameraController/SpringArm3D");
-		camera.SetPhysicsProcess(false);
 
-		pDuplicate.ToggleHealthBar(false);
 		svp.AddChild(pDuplicate);
 		camera.Position = Vector3.Zero;
 		camera.Rotation = new Vector3(0, _player.Mesh.Rotation.Y, 0);
-		spring.SpringLength = 1.85f;
-		spring.Position = new Vector3(-0.615f, 1.0f, 0.0f);
-		spring.Rotation = new Vector3(0.0f, Mathf.DegToRad(13.0f), 0.0f);
-	}
-	
-	private void ReleaseSubViewport() {
-		var svp = GetNode<SubViewport>("%CharacterPortrait");
-		svp.GetChild(0).QueueFree();
+		spring.SpringLength = 3;
+		spring.Position = new Vector3(0.0f, 1.0f, 0.0f);
+		spring.Rotation = Vector3.Zero;
 	}
 	
 	private void HideInventoryUI() {
 		if (!Visible) return;
 		Visible = false;
-		ReleaseSubViewport();
 		GetTree().Paused = false;
 	}
 
 	private void ToggleInventoryUI() {
 		GetTree().Paused = !GetTree().Paused;
-		if (!Visible) SetupSubViewport();
-		else ReleaseSubViewport();
 		Visible = !Visible;
 	}
 

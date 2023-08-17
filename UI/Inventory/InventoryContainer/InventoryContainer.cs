@@ -10,7 +10,7 @@ public partial class InventoryContainer : HFlowContainer {
 		
 		int idx = 0;
 		foreach (var child in _inventoryGrid.GetChildren()) {
-			if (child is not Slot slot) return;
+			if (child is not InventorySlot slot) return;
 			slot.Index = idx++;
 		}
 		
@@ -19,7 +19,7 @@ public partial class InventoryContainer : HFlowContainer {
 
 	public override void _PhysicsProcess(double delta) {
 		foreach (var child in _inventoryGrid.GetChildren()) {
-			if (child is not Slot slot) return;
+			if (child is not InventorySlot slot) return;
 
 			slot.ClearItem();
 			

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d38c3vr00ac76"]
+[gd_scene load_steps=4 format=3 uid="uid://d38c3vr00ac76"]
 
 [ext_resource type="Script" path="res://UI/Inventory/InventoryContainer/InventoryContainer.cs" id="1_o5pru"]
-[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/Slot/Slot.tscn" id="2_pngog"]
+[ext_resource type="PackedScene" uid="uid://miubwv3v41ww" path="res://UI/Inventory/Slot/SlotBase.tscn" id="2_75nxt"]
+[ext_resource type="Script" path="res://UI/Inventory/Slot/InventorySlot/InventorySlot.cs" id="3_vbvh7"]
 
 [node name="InventoryContainer" type="HFlowContainer"]
 offset_right = 412.0
@@ -25,182 +26,242 @@ theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 6
 
-[node name="Slot" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot2" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot2" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot3" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot3" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot4" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot4" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot5" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot5" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot6" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot6" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot7" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot7" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot8" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot8" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot9" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot9" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot10" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot10" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot11" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot11" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot12" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot12" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot13" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot13" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot14" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot14" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot15" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot15" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot16" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot16" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot17" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot17" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot18" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot18" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot19" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot19" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot20" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot20" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot21" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot21" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot22" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot22" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot23" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot23" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot24" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot24" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot25" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot25" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot26" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot26" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot27" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot27" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot28" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot28" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot29" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot29" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot30" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot30" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot31" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot31" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot32" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot32" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot33" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot33" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot34" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot34" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot35" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot35" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot36" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot36" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot37" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot37" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot38" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot38" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot39" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot39" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot40" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot40" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot41" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot41" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot42" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot42" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot43" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot43" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot44" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot44" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot45" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot45" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot46" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot46" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot47" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot47" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot48" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot48" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot49" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot49" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot50" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot50" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot51" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot51" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot52" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot52" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot53" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot53" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot54" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot54" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot55" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot55" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot56" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot56" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot57" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot57" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot58" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot58" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot59" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot59" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")
 
-[node name="Slot60" parent="InventoryGrid" instance=ExtResource("2_pngog")]
+[node name="Slot60" parent="InventoryGrid" instance=ExtResource("2_75nxt")]
 layout_mode = 2
+script = ExtResource("3_vbvh7")

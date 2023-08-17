@@ -16,7 +16,6 @@ public partial class WeaponBase : EquipmentBase
 
 		if (entity.IsInGroup("Entities") && entity != Wielder) {
 			entity.TakeDamage(Damage);
-			GD.Print(entity.Name + ": " + entity.Health);
 		}
 	}
 	

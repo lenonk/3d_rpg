@@ -12,9 +12,10 @@ public partial class Player : Entity
 	private AnimationTree _anim;
 	private AnimationNodeStateMachinePlayback _playback;
 	private State _state = null;
-	private Inventory _inventory = new();
 	private Entity _lockedTarget;
 	
+	public Inventory Inventory = new();
+	public Equipment Equipment = new();
 	public Vector3 Direction;
 	public Node3D Mesh;
 	
@@ -29,7 +30,6 @@ public partial class Player : Entity
 		Health = MaxHealth = 50;
 		
 		AddToGroup("Players");
-		SetupSignals();
 		ChangeState("Idle");
 		
 		// TODO: Remove this.  Testing only!
@@ -119,12 +119,13 @@ public partial class Player : Entity
 			}
 		}
 
-		if (_inventory.GetItem(item, out var i))
-			i.IsWearing = equip;
+		item.IsWearing = equip;
 	}
 	
-	private void OnEquipmentChanged(Item item, bool equip) {
+	public void OnEquipmentChanged(int idx, bool equip, int rIdx = -1) {
 		BoneAttachment3D slot = null;
+		var item = (equip) ? Inventory.At(idx) : Equipment.At(idx);
+		
 		switch (item.Type) {
 			case ItemType.Weapon:
 				slot = GetNode<BoneAttachment3D>("Skeleton3D/HandSlotRight");
@@ -143,35 +144,44 @@ public partial class Player : Entity
 			case ItemType.Misc:
 				break;
 		}
-		
-		if (slot is not null)
+
+		if (slot is not null) {
 			ChangeEquipment(slot, item, equip);
-	}
-	
-	private void SetupSignals() {
-		/*var pm = GetTree().Root.GetNode<PauseMenu>("World/PauseMenu");
-		pm.Connect(PauseMenu.SignalName.EquipmentChangedSignal, 
-			new Callable(this, nameof(OnEquipmentChanged)));*/
+			if (equip) {
+				Inventory.RemoveItem(idx);
+				Equipment.EquipItem(item);
+			}
+			else {
+				if (rIdx == -1)
+					Inventory.AddItem(item);
+				else {
+					Inventory.PutItem(item, rIdx);
+				}
+				Equipment.RemoveItem(idx);
+			}
+		}
 	}
 	
 	public State GetState() => _state;
-	public Inventory GetInventory() => _inventory;
+	public Inventory GetInventory() => Inventory;
+	public Equipment GetEquipment() => Equipment;
 	private float DistanceTo(Node3D node) => node != null ? GlobalPosition.DistanceTo(node.GlobalPosition) : Mathf.Inf;
 	public bool IsValidTarget(Node node) => node is Entity enemy && DistanceTo(enemy) < MaxLockonDistance && enemy != _lockedTarget;
 	public void ToggleHealthBar(bool visible) => GetNode<HealthBar3D>("Skeleton3D/Head/HealthBar3D").Visible = visible;
+	public void BanGravity() => _gravity = 0;
 	
 	
 	private void BuildInventory() {
-		_inventory.AddItem(CreateItem("Iron Dagger"));
-		_inventory.AddItem(CreateItem("Iron Double Axe"));
-		_inventory.AddItem(CreateItem("Archer's Hood"));
-		_inventory.AddItem(CreateItem("Archer's Bandolier"));
-		_inventory.AddItem(CreateItem("Wooden Shield"));
-		_inventory.AddItem(CreateItem("Magical Sword"));
-		_inventory.AddItem(CreateItem("Magical Sword"));
+		Inventory.AddItem(CreateItem("Iron Dagger"));
+		Inventory.AddItem(CreateItem("Iron Double Axe"));
+		Inventory.AddItem(CreateItem("Archer's Hood"));
+		Inventory.AddItem(CreateItem("Archer's Bandolier"));
+		Inventory.AddItem(CreateItem("Wooden Shield"));
+		Inventory.AddItem(CreateItem("Magical Sword"));
+		Inventory.AddItem(CreateItem("Magical Sword"));
 		
 		Item pot = CreateItem("Minor Health Potion");
 		pot.Count = 97;
-		_inventory.AddItem(pot);
+		Inventory.AddItem(pot);
 	}
 }

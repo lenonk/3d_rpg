@@ -5,6 +5,7 @@ using static Items;
 
 public partial class Inventory {
 	public const int MaxSize = 60;
+	public const int MaxEquipSlots = 5;
 
 	private List<Item> _inventory = new(Enumerable.Repeat<Item>(null, MaxSize));
 
@@ -22,6 +23,16 @@ public partial class Inventory {
 		_inventory[idx] = i;
 	}
 
+	public void PutItem(Item i, int idx) {
+		while (_inventory[idx] != null && idx < MaxSize)
+			idx++;
+
+		if (idx >= MaxSize)
+			return;
+
+		_inventory[idx] = i;
+	}
+	
 	public void MoveItem(int fromIdx, int toIdx, int count = 0) {
 		fromIdx = Math.Clamp(fromIdx, 0, MaxSize);
 		toIdx = Math.Clamp(toIdx, 0, MaxSize);
@@ -65,4 +76,5 @@ public partial class Inventory {
 	public int CountItem(string i) => _inventory.FindAll(item => item.Name == i).Count;
 	public Item At(int idx) => _inventory[idx];
 	public List<Item> GetItems() => _inventory;
+	
 }
