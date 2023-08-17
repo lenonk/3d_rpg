@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://UI/PauseMenu/PauseMenu.cs" id="1_wossw"]
 
 [node name="PauseMenu" type="CanvasLayer"]
-process_mode = 2
+process_mode = 3
 script = ExtResource("1_wossw")
 
 [node name="Background" type="Panel" parent="."]

@@ -32,20 +32,20 @@ public partial class InventoryUI : CanvasLayer
 	private void HideInventoryUI() {
 		if (!Visible) return;
 		Visible = false;
-		GetTree().Paused = false;
+		_player.ProcessMode = ProcessModeEnum.Pausable;
 	}
 
-	private void ToggleInventoryUI() {
-		GetTree().Paused = !GetTree().Paused;
-		Visible = !Visible;
+	private void ShowInventoryUI() {
+		if (Visible) return;
+		Visible = true;
+		_player.ProcessMode = ProcessModeEnum.Disabled;
+		
 	}
-
 	private void OnClosePressed() {
 		HideInventoryUI();
-		GetViewport().SetInputAsHandled();
 	}
 	
-	public override void _Input(InputEvent @event) {
+	public override void _UnhandledKeyInput(InputEvent @event) {
 		switch (@event) {
 			case InputEventKey {PhysicalKeycode: Key.Escape, Pressed: true}:
 				if (!Visible) return;
@@ -53,8 +53,18 @@ public partial class InventoryUI : CanvasLayer
 				GetViewport().SetInputAsHandled();
 				break;	
 			case InputEventKey {PhysicalKeycode: Key.I, Pressed: true}:
-				ToggleInventoryUI();
+				if (Visible) HideInventoryUI();
+				else ShowInventoryUI();
 				GetViewport().SetInputAsHandled();
+				break;
+		}
+	}
+	
+	public override void _UnhandledInput(InputEvent @event) {
+		switch (@event) {
+			case InputEventMouseButton {Pressed: true}:
+				if (Visible)
+					GetViewport().SetInputAsHandled();
 				break;
 		}
 	}

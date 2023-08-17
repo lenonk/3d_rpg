@@ -30,7 +30,6 @@ public partial class InventorySlot : SlotBase {
 		else {
 			EmitSignal(SlotBase.SignalName.EquipmentChanged, dd.Index, false, Index);
 		}
-		Dragging = false;
 	}
 
 	public override bool _CanDropData(Vector2 atPosition, Variant data) {
@@ -41,7 +40,6 @@ public partial class InventorySlot : SlotBase {
 		if (Player.GetInventory().At(Index) is null) return new();
 
 		CreateDragPreview();
-		Dragging = true;
 		
 		var dd = new DragData();
 		dd.Index = Index;
@@ -50,6 +48,14 @@ public partial class InventorySlot : SlotBase {
 		return dd;
 	}
 
+	public override void _GuiInput(InputEvent @event) {
+		switch (@event) {
+			case InputEventMouseButton {ButtonIndex: MouseButton.Left, DoubleClick: true}:
+				EmitSignal(SlotBase.SignalName.EquipmentChanged, Index, true, -1);
+				break;
+		}
+	}
+	
 	protected override Items.Item GetItem() => Player.GetInventory().At(Index);
 	private void OnDragDialogClose(int result) => _dragNumber = result;
 }

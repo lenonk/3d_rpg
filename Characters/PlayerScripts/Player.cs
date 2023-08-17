@@ -30,6 +30,7 @@ public partial class Player : Entity
 		Health = MaxHealth = 50;
 		
 		AddToGroup("Players");
+		SetupSignals();
 		ChangeState("Idle");
 		
 		// TODO: Remove this.  Testing only!
@@ -54,7 +55,7 @@ public partial class Player : Entity
 		MoveAndSlide();
 	}
 
-	public override void _UnhandledInput(InputEvent @event) {
+	public override void _UnhandledKeyInput(InputEvent @event) {
 		switch (@event) {
 			case InputEventKey {PhysicalKeycode: Key.E, Pressed: true}:
 				var enemies = GetTree().GetNodesInGroup("Enemies");
@@ -64,6 +65,7 @@ public partial class Player : Entity
 					if (IsValidTarget(enemy) && DistanceTo(enemy) < DistanceTo(closest))
 						closest = enemy;
 				}
+				GetViewport().SetInputAsHandled();
 				_lockedTarget = closest;
 				break;
 		}
@@ -159,6 +161,22 @@ public partial class Player : Entity
 				}
 				Equipment.RemoveItem(idx);
 			}
+		}
+	}
+	
+	private void SetupSignals() {
+		var ec = GetTree().Root.GetNode<VFlowContainer>("World/InventoryUI/%EquipmentContainer");
+		var ic = GetTree().Root.GetNode<GridContainer>("World/InventoryUI/%InventoryContainer/InventoryGrid");
+
+		foreach (var child in ec.GetChildren()) {
+			if (child is not EquipmentSlot slot) continue;
+			slot.Connect(SlotBase.SignalName.EquipmentChanged,
+				new Callable(this, nameof(OnEquipmentChanged)));
+		}
+		foreach (var child in ic.GetChildren()) {
+			if (child is not InventorySlot slot) continue;
+			slot.Connect(SlotBase.SignalName.EquipmentChanged,
+				new Callable(this, nameof(OnEquipmentChanged)));
 		}
 	}
 	

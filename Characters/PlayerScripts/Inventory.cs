@@ -5,7 +5,6 @@ using static Items;
 
 public partial class Inventory {
 	public const int MaxSize = 60;
-	public const int MaxEquipSlots = 5;
 
 	private List<Item> _inventory = new(Enumerable.Repeat<Item>(null, MaxSize));
 

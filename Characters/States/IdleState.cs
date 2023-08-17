@@ -23,7 +23,7 @@ public partial class IdleState : State
 
 		_player.Stop(delta);
 	}
-	
+
 	public override void Exit() {
 	}
 }

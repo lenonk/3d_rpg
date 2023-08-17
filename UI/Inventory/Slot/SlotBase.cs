@@ -6,7 +6,6 @@ public partial class SlotBase : Panel {
 	[Signal] public delegate void EquipmentChangedEventHandler(int index, bool equip, int rIndex = -1);
 	
 	protected Player Player;
-	protected bool Dragging;
 	
 	private SlotHover _hoverPanel;
 	private TextureRect _icon;
@@ -31,12 +30,8 @@ public partial class SlotBase : Panel {
 		_count.Visible = false;
 	
 		Player = GetTree().GetNodesInGroup("Players")[0] as Player;
-		EquipmentChanged += Player.OnEquipmentChanged;
 	}
 
-	public void OnDragCancelled() {
-		Dragging = false;
-	}
 	public void SetItem(Items.Item item) {
 		if (item is null) return;
 
@@ -60,7 +55,7 @@ public partial class SlotBase : Panel {
 	}
 	
 	private void SetupHoverPanel() {
-		if (Dragging || _hoverPanel is null || GetItem() is null) return;
+		if (Input.IsAnythingPressed() || _hoverPanel is null || GetItem() is null) return;
 
 		_hoverPanel.SetName(GetItem().Name);
 		_hoverPanel.SetDescription(GetItem().Description);
@@ -74,7 +69,7 @@ public partial class SlotBase : Panel {
 	}
 
 	private void OnSlotMouseEntered() {
-		if (Dragging || GetItem() is null) return;
+		if (Input.IsAnythingPressed() || GetItem() is null) return;
 
 		if (_hoverScene.Instantiate() is SlotHover { } hp) {
 			_hoverPanel = hp;
@@ -94,15 +89,6 @@ public partial class SlotBase : Panel {
 		if (_dragPreviewScene.Instantiate() is DragPreview { } preview) {
 			preview.Texture = _icon.Texture;
 			AddChild(preview);
-		}
-	}
-
-	public override void _GuiInput(InputEvent @event) {
-		if (@event is not InputEventScreenDrag dragEvent)
-			return;
-
-		if (dragEvent.IsCanceled()) {
-			Dragging = false;
 		}
 	}
 }
