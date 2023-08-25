@@ -89,6 +89,7 @@ public partial class Enemy : Entity {
 	}
 
 	public override async void Die() {
+		base.Die();
 		SetPhysicsProcess(false);
 		_animationPlayer.Stop();
 		_animationPlayer.Play("Defeat");

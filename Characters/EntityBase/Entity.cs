@@ -4,6 +4,8 @@ using System;
 public partial class Entity : CharacterBody3D {
 	[Export] public int MaxHealth = 10;
 	[Export] public int Health = 10;
+
+	[Signal] public delegate void EntityDiedEventHandler();
 	
 	public float Size;
 
@@ -17,6 +19,11 @@ public partial class Entity : CharacterBody3D {
 			Die();
 	}
 
+	public virtual bool IsDead() {
+		return Health <= 0;
+	}
+	
 	public virtual void Die() {
+		EmitSignal(SignalName.EntityDied);
 	}
 }

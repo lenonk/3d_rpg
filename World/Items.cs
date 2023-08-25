@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public partial class Items : Node {
 
 	public enum ItemType {
-		None,
 		Head,
 		Body,
 		Weapon,
 		Shield,
 		Waist,
-		Misc
+		Misc,
+		None
 	};
 	
 	public record ItemPrototype(

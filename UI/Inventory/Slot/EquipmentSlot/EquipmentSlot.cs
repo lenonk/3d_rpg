@@ -42,6 +42,9 @@ public partial class EquipmentSlot : SlotBase {
 	public override void _GuiInput(InputEvent @event) {
 		switch (@event) {
 			case InputEventMouseButton {ButtonIndex: MouseButton.Left, DoubleClick: true}:
+				var clickedItem = Player.GetEquipment().At(Index);
+				if (clickedItem is null) return;
+				
 				EmitSignal(SlotBase.SignalName.EquipmentChanged, Index, false, -1);
 				break;
 		}

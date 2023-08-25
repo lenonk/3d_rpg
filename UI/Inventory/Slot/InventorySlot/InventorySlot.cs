@@ -51,6 +51,13 @@ public partial class InventorySlot : SlotBase {
 	public override void _GuiInput(InputEvent @event) {
 		switch (@event) {
 			case InputEventMouseButton {ButtonIndex: MouseButton.Left, DoubleClick: true}:
+				var clickedItem = Player.GetInventory().At(Index);
+				if (clickedItem is null || !clickedItem.IsWearable()) return;
+
+				var wearIdx = Player.GetInventory().At(Index).Type;
+				if (Player.GetEquipment().At((short)wearIdx) != null) {
+					EmitSignal(SlotBase.SignalName.EquipmentChanged, (short)wearIdx, false, -1);
+				}
 				EmitSignal(SlotBase.SignalName.EquipmentChanged, Index, true, -1);
 				break;
 		}

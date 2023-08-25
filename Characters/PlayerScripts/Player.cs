@@ -1,4 +1,6 @@
 using Godot;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using static Items;
 
 public partial class Player : Entity
@@ -13,6 +15,7 @@ public partial class Player : Entity
 	private AnimationNodeStateMachinePlayback _playback;
 	private State _state = null;
 	private Entity _lockedTarget;
+	private Node3D _cameraController;
 	
 	public Inventory Inventory = new();
 	public Equipment Equipment = new();
@@ -26,6 +29,7 @@ public partial class Player : Entity
 		
 		_anim = GetNode<AnimationTree>("AnimationTree");
 		_playback = (AnimationNodeStateMachinePlayback)_anim.Get("parameters/playback");
+		_cameraController = GetNode<Node3D>("CameraController");
 		Mesh = GetNode<Node3D>("Skeleton3D");
 		Health = MaxHealth = 50;
 		
@@ -39,9 +43,9 @@ public partial class Player : Entity
 	
 	public override void _PhysicsProcess(double delta) {
 		Direction = Vector3.Zero;
-		
+
+		Direction = GetDirection();
 		var hRot = GetNode<Node3D>("CameraController").Basis.GetEuler().Y;
-		Direction = GetDirection(); 
 		Direction = Direction.Rotated(Vector3.Up, hRot).Normalized();
 
 		_state?.Process(delta);
@@ -57,20 +61,47 @@ public partial class Player : Entity
 
 	public override void _UnhandledKeyInput(InputEvent @event) {
 		switch (@event) {
-			case InputEventKey {PhysicalKeycode: Key.E, Pressed: true}:
+			case InputEventKey {PhysicalKeycode: Key.Tab, Pressed: true}:
 				var enemies = GetTree().GetNodesInGroup("Enemies");
+				var sEnemies = enemies.OrderBy(enemy => DistanceTo((Node3D)enemy)).ToList();
 
-				Entity closest = null;
-				foreach (Entity enemy in enemies) {
-					if (IsValidTarget(enemy) && DistanceTo(enemy) < DistanceTo(closest))
-						closest = enemy;
+				if (!sEnemies.Contains(_lockedTarget)) {
+					UnlockTarget();
 				}
-				GetViewport().SetInputAsHandled();
-				_lockedTarget = closest;
+					
+				if (_lockedTarget == sEnemies[^1]) {
+					UnlockTarget();
+					return;
+				}
+
+				// TODO: Change this to just select the next node in sEnemies
+				foreach (var node in sEnemies) {
+					if (node is not Entity { } enemy) continue;
+					if (!IsValidTarget(enemy)) continue; 
+					LockTarget(enemy);
+					break;
+				}
+
 				break;
 		}
 	}
 
+	private void LockTarget(Entity target) {
+		GD.Print($"Locking target {target.Name}");
+		_lockedTarget = target;
+		_lockedTarget.EntityDied += OnTargetDeath;
+	}
+	
+	private void UnlockTarget() {
+		GD.Print($"Unlocking target {_lockedTarget.Name}");
+		_lockedTarget.EntityDied -= OnTargetDeath;
+		_lockedTarget = null;
+	}
+		
+	private void OnTargetDeath() {
+		UnlockTarget();
+	}
+	
 	public void ChangeState(string stateName) {
 		_state?.Exit();
 		_state?.QueueFree();
@@ -128,7 +159,7 @@ public partial class Player : Entity
 		BoneAttachment3D slot = null;
 		var item = (equip) ? Inventory.At(idx) : Equipment.At(idx);
 		
-		switch (item.Type) {
+		switch (item?.Type) {
 			case ItemType.Weapon:
 				slot = GetNode<BoneAttachment3D>("Skeleton3D/HandSlotRight");
 				break;
@@ -184,7 +215,7 @@ public partial class Player : Entity
 	public Inventory GetInventory() => Inventory;
 	public Equipment GetEquipment() => Equipment;
 	private float DistanceTo(Node3D node) => node != null ? GlobalPosition.DistanceTo(node.GlobalPosition) : Mathf.Inf;
-	public bool IsValidTarget(Node node) => node is Entity enemy && DistanceTo(enemy) < MaxLockonDistance && enemy != _lockedTarget;
+	public bool IsValidTarget(Entity enemy) => !enemy.IsDead() && DistanceTo(enemy) < MaxLockonDistance && enemy != _lockedTarget;
 	public void ToggleHealthBar(bool visible) => GetNode<HealthBar3D>("Skeleton3D/Head/HealthBar3D").Visible = visible;
 	public void BanGravity() => _gravity = 0;
 	
